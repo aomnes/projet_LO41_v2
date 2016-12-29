@@ -73,7 +73,7 @@ typedef struct	s_do_thr
 
 void		error(char *msg);
 
-void		superviseur(int nb_piece, s_piece piece);
+void		superviseur(int nb_piece, s_piece **piece);
 s_piece		**creation_piece(int nb_machine);
 void		creation_machine(void);
 void		creation_convoyeur(void);

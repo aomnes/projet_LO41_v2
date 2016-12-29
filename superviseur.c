@@ -16,7 +16,7 @@ void gestionnaire_sigalrm (int inutilise)
 	siglongjmp(contexte_sigalrm, 1);//echec du saut
 }
 
-void superviseur(int nb_piece, s_piece piece)
+void superviseur(int nb_piece, s_piece **piece)
 {
 	struct sigaction action;
 
