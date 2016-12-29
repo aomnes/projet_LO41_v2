@@ -47,7 +47,7 @@ s_piece		**creation_piece(int nb_machine)
 	}
 	piece = (s_piece**)malloc(sizeof(piece) * nb_machine);		//ajouter le free(2) dans le signal
 	if (!piece)
-		error("malloc creation tableau piece");
+		error("malloc creation tableau piece"); //==>peut etre serait il mieux de faire le malloc dans le superviseur
 	while (index < nb_machine)
 	{
 		piece[index] = (s_piece*)malloc(sizeof(piece) * nb_piece[index]);
