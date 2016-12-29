@@ -44,3 +44,29 @@ int     lire_nombre_defaut(void)
     } while(d < 0 || d > 4);
     return (d);
 }
+
+int     lire_numero_type_def(int nb_machine)
+{
+    int d;
+    int c;
+
+    do
+    {
+        scanf("%d", &d);
+        while ((c = getchar ()) != '\n' && c != EOF);
+    } while(d < 0 || d > nb_machine - 1);
+    return (d);
+}
+
+int     lire_numero_piece(int nb_piece)
+{
+    int d;
+    int c;
+
+    do
+    {
+        scanf("%d", &d);
+        while ((c = getchar ()) != '\n' && c != EOF);
+    } while(d < 0 || d > nb_piece - 1);
+    return (d);
+}

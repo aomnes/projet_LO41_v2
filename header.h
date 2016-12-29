@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <stdbool.h>
 
 #include <errno.h>
 
@@ -42,18 +43,26 @@ int mem_ID;
 #define MACHINE_VERIF 1
 #define RATIO_TEMPS 0.02
 
+int		defaut; /* ==>
+0. non
+1. defaut robot entre
+2. defaut robot sortie
+3. defaut retire convoyeur pour table
+4. defaut duree de travail machine
+*/
+
 int     lire_nombre_sp(void);
 int     lire_nombre_p(void);
 int     lire_nombre_defaut(void);
+int     lire_numero_type_def(int nb_machine);
+int     lire_numero_piece(int nb_piece);
 
 typedef struct	s_piece
 {
-	int			id;
-	int			usinage;
-	int			def_in;
-	int			def_ou;
-	int			def_retire_tapis;
-	int			def_work_machine;
+	bool		def_in;
+	bool		def_out;
+	bool		def_retire_conv;
+	bool		def_work_machine;
 }				s_piece;
 
 typedef struct	s_do_thr
@@ -65,7 +74,7 @@ typedef struct	s_do_thr
 void		error(char *msg);
 
 void		superviseur(int nb_piece, s_piece piece);
-void		creation_piece(int nb_machine);
+s_piece		**creation_piece(int nb_machine);
 void		creation_machine(void);
 void		creation_convoyeur(void);
 

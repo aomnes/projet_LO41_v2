@@ -1,17 +1,17 @@
 #include "header.h"
 
-void		creation_piece(int nb_machine)
+s_piece		**creation_piece(int nb_machine)
 {
 	int		*nb_piece;
 	int		i;
 	int		i_bis;
 	int		j;
 	int		index;
-	int		defaut;
-	//int		nb_aleatoire;
     int     nb_type_piece;
     int     nb_type_piece2;
     int     somme_piece;
+	int		num_def_piece;
+	int 	defaut_machine;
 	s_piece	**piece;
 
 	srand(time(NULL));
@@ -62,14 +62,14 @@ void		creation_piece(int nb_machine)
             3. defaut retire convoyeur pour table\n\
             4. defaut duree de travail machine");
 	defaut = lire_nombre_defaut();
-	while (i < nb_machine)
+	while (i < nb_machine)//init defaut 0
 	{
 		while (i_bis < nb_piece[i])
 		{
-		    piece[i][i_bis].def_in = 0;
-		    piece[i][i_bis].def_ou = 0;
-		    piece[i][i_bis].def_retire_tapis = 0;
-		    piece[i][i_bis].def_work_machine = 0;
+		    piece[i][i_bis].def_in = false;
+		    piece[i][i_bis].def_out = false;
+		    piece[i][i_bis].def_retire_conv = false;
+		    piece[i][i_bis].def_work_machine = false;
 			i_bis++;
 		}
 		i++;
@@ -91,13 +91,37 @@ void		creation_piece(int nb_machine)
 	}
 	*/
 	printf("Voilà, nous avons créé les pieces!");
+	if (defaut)
+	{
+		puts("\nInstallation du defaut:");
+		puts("Rentrer un numero de type de piece:");
+		do {
+			defaut_machine = lire_numero_type_def(nb_machine);
+		} while(nb_piece[defaut_machine] == 0);
+		printf("Defaut sur piece type: %d\n", defaut_machine);
+		puts("Rentrer un numero de la piece:");
+		num_def_piece = lire_numero_piece(nb_piece[defaut_machine]);
+		switch (defaut) {
+			case 1:
+			piece[defaut_machine][num_def_piece].def_in = true;
+			break;
+			case 2:
+			piece[defaut_machine][num_def_piece].def_out = true;
+			break;
+			case 3:
+			piece[defaut_machine][num_def_piece].def_retire_conv = true;
+			break;
+			case 4:
+			piece[defaut_machine][num_def_piece].def_work_machine = true;
+			break;
+		}
+	}
 	printf("\n\n=============== FIN DE LA CREATION DES PIECES ===============\n\n");
-	free(piece);
-	//return (piece);
+	return (piece);
 }
 
 int main(void)
 {
-    creation_piece(3);
-    return (0);
+	creation_piece(3);
+	return (0);
 }
