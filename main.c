@@ -3,13 +3,16 @@
 int			main(void)
 {
 	pid_t	pid;
-	s_piece *piece;
+	s_piece **piece;
 
 	puts("Bienvenue");
 	sleep(1);
 	//modification des signaux
-	piece = creation_piece();//création des pièces
 	creation_machine();//création des machines (threads)
+	piece = (s_piece**)malloc(sizeof(piece) * nb_machine);		//ajouter le free(2) dans le signal
+	if (!piece)
+		error("malloc creation tableau piece");
+	piece = creation_piece(nb_machine, piece);//création des pièces
 	creation_convoyeur();//création du creation_convoyeur()
 
 	pid = fork();//création du processus superviseur

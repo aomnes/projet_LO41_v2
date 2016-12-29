@@ -27,7 +27,6 @@ void			creation_machine(void)
 {
 	int			rc;
 	pthread_t	*thread_id;
-	char		buffer[256];
 	int			i;
 	s_do_thr	*info_thread;
 
@@ -35,7 +34,7 @@ void			creation_machine(void)
 
 	puts("Combien voulez-vous de machines? (entrer autre chose que 0)");
 
-	nb_machine = lire_nombre_sp(void);
+	nb_machine = lire_nombre_sp();
 
 	thread_id = (pthread_t*)malloc(sizeof(pthread_t) * nb_machine);//ne pas oublier de free(2) à la  et signal
 	if (!thread_id)

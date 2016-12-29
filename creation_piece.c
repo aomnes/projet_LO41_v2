@@ -1,6 +1,6 @@
 #include "header.h"
 
-s_piece		**creation_piece(int nb_machine)
+s_piece		**creation_piece(int nb_machine, s_piece **piece)
 {
 	int		*nb_piece;
 	int		i;
@@ -12,7 +12,6 @@ s_piece		**creation_piece(int nb_machine)
     int     somme_piece;
 	int		num_def_piece;
 	int 	defaut_machine;
-	s_piece	**piece;
 
 	srand(time(NULL));
     nb_type_piece = nb_machine;
@@ -45,9 +44,7 @@ s_piece		**creation_piece(int nb_machine)
         printf("%s\n", "Exit...");
 		exit(0);
 	}
-	piece = (s_piece**)malloc(sizeof(piece) * nb_machine);		//ajouter le free(2) dans le signal
-	if (!piece)
-		error("malloc creation tableau piece"); //==>peut etre serait il mieux de faire le malloc dans le superviseur
+
 	while (index < nb_machine)
 	{
 		piece[index] = (s_piece*)malloc(sizeof(piece) * nb_piece[index]);
