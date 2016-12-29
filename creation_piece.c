@@ -30,13 +30,6 @@ s_piece		*creation_piece(int nb_machine)
         nb_piece[nb_type_piece - 1] = lire_nombre_p();
         nb_type_piece--;
     }
-	puts("Dans ce test y aura-t-il des erreurs?\n\
-            0. non\n\
-            1. defaut robot entre\n\
-            2. defaut robot sortie\n\
-            3. defaut retire convoyeur pour table\n\
-            4. defaut duree de travail machine");
-	defaut = lire_nombre_defaut();
     while (nb_type_piece2)
     {
         somme_piece += nb_piece[nb_type_piece2 - 1];
@@ -47,13 +40,19 @@ s_piece		*creation_piece(int nb_machine)
 	if (!somme_piece)
 	{
 		puts("Vous n'avez cree aucune piece");
-        printf("%s\n", "Extinction des machines");
+        printf("%s\n", "Exit...");
 		exit(0);
 	}
 	piece = (s_piece*)malloc(sizeof(piece) * somme_piece);		//ajouter le free(2) dans le signal
 	if (!piece)
 		error("malloc creation tableau pieces");
-
+	puts("Dans ce test y aura-t-il des erreurs?\n\
+            0. non\n\
+            1. defaut robot entre\n\
+            2. defaut robot sortie\n\
+            3. defaut retire convoyeur pour table\n\
+            4. defaut duree de travail machine");
+	defaut = lire_nombre_defaut();
     while (i < somme_piece)
     {
         piece[i].id = i;
