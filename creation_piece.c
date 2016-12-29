@@ -1,19 +1,18 @@
 #include "header.h"
 
-s_piece		*creation_piece(int nb_machine)
+void		creation_piece(int nb_machine)
 {
 	int		*nb_piece;
 	int		i;
 	int		i_bis;
 	int		j;
+	int		index;
 	int		defaut;
 	//int		nb_aleatoire;
     int     nb_type_piece;
     int     nb_type_piece2;
     int     somme_piece;
-	s_piece	*piece;
-	s_piece	*piece_fin;
-
+	s_piece	**piece;
 
 	srand(time(NULL));
     nb_type_piece = nb_machine;
@@ -22,6 +21,7 @@ s_piece		*creation_piece(int nb_machine)
     i = 0;
 	j = 0;
 	i_bis = 0;
+	index = 0;
 
     nb_piece = (int*)malloc(sizeof(int) * nb_machine);
     if (!nb_piece)
@@ -45,9 +45,16 @@ s_piece		*creation_piece(int nb_machine)
         printf("%s\n", "Exit...");
 		exit(0);
 	}
-	piece = (s_piece*)malloc(sizeof(piece) * somme_piece);		//ajouter le free(2) dans le signal
+	piece = (s_piece**)malloc(sizeof(piece) * nb_machine);		//ajouter le free(2) dans le signal
 	if (!piece)
-		error("malloc creation tableau pieces");
+		error("malloc creation tableau piece");
+	while (index < nb_machine)
+	{
+		piece[index] = (s_piece*)malloc(sizeof(piece) * nb_piece[index]);
+		if (!piece[index])
+			error("malloc creation tableau piece[index]");
+		index++;
+	}
 	puts("Dans ce test y aura-t-il des erreurs?\n\
             0. non\n\
             1. defaut robot entre\n\
@@ -55,48 +62,38 @@ s_piece		*creation_piece(int nb_machine)
             3. defaut retire convoyeur pour table\n\
             4. defaut duree de travail machine");
 	defaut = lire_nombre_defaut();
-    while (i < somme_piece)
-    {
-        piece[i].id = i;
-        piece[i].def_in = 0;
-        piece[i].def_ou = 0;
-        piece[i].def_retire_tapis = 0;
-        piece[i].def_work_machine = 0;
-        if (i_bis < nb_piece[j])
-        	piece[i].usinage = j;
-		else
+	while (i < nb_machine)
+	{
+		while (i_bis < nb_piece[i])
 		{
-			j++;
-			piece[i].usinage = j;
-			i_bis = 0;
+		    piece[i][i_bis].def_in = 0;
+		    piece[i][i_bis].def_ou = 0;
+		    piece[i][i_bis].def_retire_tapis = 0;
+		    piece[i][i_bis].def_work_machine = 0;
+			i_bis++;
 		}
-		printf("type d usinage piece %d: %d\n", i, piece[i].usinage);
-		i_bis++;
 		i++;
-    }
-	/*===> trie des pieces abc abc abc ab ab ab b b ==> a = 6, b = 8, c = 2 en supposant les temps d usinage identiques*/
-	piece_fin = (s_piece*)malloc(sizeof(piece_fin) * somme_piece); //ajouter le free(2) dans le signal
-	if (!piece_fin)
-		error("malloc creation tableau pieces");
-	while (somme_piece)
-	{
-
-		piece_fin[i] = piece[i];
-		somme_piece--;
 	}
-	/*
-    for (i = 0; i < nb_piece; i++)
+	/* ==> test affichage des pieces
+	i = 0;
+	printf("nb_machine: %d\n\n", nb_machine);
+	while (i < nb_machine)
 	{
-		piece->id = i;
-		nb_aleatoire = rand()%101;
-		if (nb_aleatoire >=  && defaut != 0)////(rand()%(MAX - MIN + 1)) + MIN
-			piece->defaut = 2;
-		else
-			piece->defaut = 1;
-	}*/
+		i_bis = 0;
+		while (i_bis < nb_piece[i])
+		{
+			printf("nb_pieces: %d\n", nb_piece[i]);
+			printf("piece type %d: %d\n", i, i_bis);
+			i_bis++;
+		}
+		printf("\n");
+		i++;
+	}
+	*/
 	printf("Voilà, nous avons créé les pieces!");
 	printf("\n\n=============== FIN DE LA CREATION DES PIECES ===============\n\n");
-	return (piece);
+	free(piece);
+	//return (piece);
 }
 
 int main(void)
