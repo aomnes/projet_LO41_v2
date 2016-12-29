@@ -12,6 +12,8 @@ s_piece		*creation_piece(int nb_machine)
     int     nb_type_piece2;
     int     somme_piece;
 	s_piece	*piece;
+	s_piece	*piece_fin;
+
 
 	srand(time(NULL));
     nb_type_piece = nb_machine;
@@ -72,7 +74,17 @@ s_piece		*creation_piece(int nb_machine)
 		i_bis++;
 		i++;
     }
-    /*
+	/*===> trie des pieces abc abc abc ab ab ab b b ==> a = 6, b = 8, c = 2 en supposant les temps d usinage identiques*/
+	piece_fin = (s_piece*)malloc(sizeof(piece_fin) * somme_piece); //ajouter le free(2) dans le signal
+	if (!piece_fin)
+		error("malloc creation tableau pieces");
+	while (somme_piece)
+	{
+
+		piece_fin[i] = piece[i];
+		somme_piece--;
+	}
+	/*
     for (i = 0; i < nb_piece; i++)
 	{
 		piece->id = i;
