@@ -25,6 +25,9 @@ s_piece		**creation_piece(int nb_machine, s_piece **piece)
     nb_piece = (int*)malloc(sizeof(int) * nb_machine);
     if (!nb_piece)
         error("malloc nb_piece");
+	piece = (s_piece**)malloc(sizeof(piece) * nb_machine);		//ajouter le free(2) dans le signal
+	if (!piece)
+		error("malloc creation tableau piece");
     while (nb_type_piece)
     {
         printf("Ici, nous allons créer les pièces à usiner.\nPour la machine %d Combien en voulez-vous ?\n", nb_type_piece - 1);
