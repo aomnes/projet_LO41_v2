@@ -36,9 +36,6 @@ sem_t *sem_machine;
 
 int nb_machine;
 
-void* ptr_mem_partagee;
-int mem_ID;
-
 #define CONVOYER_VERIF 0 //nb pour les semaphores
 #define MACHINE_VERIF 1
 #define RATIO_TEMPS 0.02

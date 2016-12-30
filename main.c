@@ -10,6 +10,7 @@ int			main(void)
 	sleep(1);
 	//modification des signaux
 	creation_machine();//création des machines (threads)
+	sleep(3);//attente de la creation des machines
 	piece = creation_piece(nb_machine, piece);//création des pièces
 	creation_convoyeur();//création du creation_convoyeur()
 	pid = fork();//création du processus superviseur
@@ -25,8 +26,6 @@ int			main(void)
 		default:
 			printf("J'ai lancé le superviseur\n");
 			wait(NULL);
-			if (shmctl(mem_ID, IPC_RMID, 0) == -1)
-				error("shmctl /cle_shm");
 			/*if (sem_unlink("/sem_convoyeur") == -1)
 				error("unlink_sem_convoyeur");//
 			if (sem_unlink("/sem_machine") == -1)

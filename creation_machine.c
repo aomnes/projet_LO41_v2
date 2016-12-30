@@ -7,9 +7,6 @@ void			*fonc_thread(void *k)
 {
 	s_do_thr	*info_thread;
 
-	if((ptr_mem_partagee = shmat(mem_ID,NULL, 0)) == (void *) -1)
-		error("shmat");
-
 	info_thread = (s_do_thr*)k;
 	printf("Machine %d allumee\n", info_thread->num_thread);
 	while (1)
@@ -39,10 +36,6 @@ void			creation_machine(void)
 	thread_id = (pthread_t*)malloc(sizeof(pthread_t) * nb_machine);//ne pas oublier de free(2) à la  et signal
 	if (!thread_id)
 		error("malloc thread_id creat_machine");
-
-	mem_ID = shmget(CLEF, sizeof(int) * nb_machine, 0666 | IPC_CREAT);
-	if(mem_ID < 0)
-		error("shmget");
 
 	for(i = 0; i < nb_machine; i++)
 	{

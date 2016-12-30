@@ -25,9 +25,6 @@ void superviseur(int nb_piece, s_piece **piece)
 	sigfillset(& action.sa_mask);
 	sigaction(SIGALRM, & action, NULL);
 
-	if((ptr_mem_partagee = shmat(mem_ID,NULL, 0)) == (void*) -1)
-		error("shmat");
-
 	sem_convoyeur = sem_open("/sem_convoyeur", O_RDWR);
 	if (sem_convoyeur == SEM_FAILED)
 	{
