@@ -55,6 +55,11 @@ void superviseur(int nb_piece, s_piece **piece)
 
 	while (nb_piece)
 	{
+
+		sem_post(sem_convoyeur);
+		//msgsnd("envoyer piece convoyeur");
+		slee(1);
+		//msgsnd("machine retire");
 		if (sigsetjmp(contexte_sigalrm, 1) == 0)
 		{
 			/* premier passage, installation */
