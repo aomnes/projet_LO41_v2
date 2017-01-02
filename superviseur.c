@@ -20,6 +20,12 @@ void superviseur(int nb_piece, s_piece **piece)
 {
 	struct sigaction action;
 
+	int msgid;
+	tMessage req, rep;
+
+	if ((msgid = msgget(CLEF, 0)) == -1)
+		error("msgget");
+
 	action.sa_handler = gestionnaire_sigalrm;
 	action.sa_flags = 0;
 	sigfillset(& action.sa_mask);
@@ -44,6 +50,8 @@ void superviseur(int nb_piece, s_piece **piece)
 		if (sem_machine == SEM_FAILED)
 			error("sem_open/init/machine");
 	}
+
+
 
 	while (nb_piece)
 	{
