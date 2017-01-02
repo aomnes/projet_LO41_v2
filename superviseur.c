@@ -21,7 +21,8 @@ void superviseur(int nb_piece, s_piece **piece)
 	struct sigaction action;
 
 	int msgid;
-	tMessage req, rep;
+	s_msg_env_sup envoi;
+	s_msg_rcv_sup rep;
 
 	if ((msgid = msgget(CLEF, 0)) == -1)
 		error("msgget");
@@ -53,10 +54,9 @@ void superviseur(int nb_piece, s_piece **piece)
 
 	while (nb_piece)
 	{
-
 		sem_post(sem_convoyeur);
 		//msgsnd("envoyer piece convoyeur");
-		slee(1);
+		sleep(1);
 		//msgsnd("machine retire");
 		if (sigsetjmp(contexte_sigalrm, 1) == 0)
 		{
