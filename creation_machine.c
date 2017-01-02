@@ -6,6 +6,7 @@
 void			*fonc_thread(void *k)
 {
 	s_do_thr	*info_thread;
+	int			nb_piece;
 
 	info_thread = (s_do_thr*)k;
 	printf("Machine %d allumee\n", info_thread->num_thread);
@@ -16,6 +17,8 @@ void			*fonc_thread(void *k)
 
 	while (1)
 	{
+		if (!nb_piece)//nb_recu par msgrcv();
+			break;
 		//do
 		// rep = msgrcv(...) ordre
 		// num_mach = struct.num;

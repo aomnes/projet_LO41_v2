@@ -65,6 +65,7 @@ typedef struct	s_piece
 typedef struct	s_msg_env_sup
 {
 	int			num_machine;
+	int			nb_piece_type;	//piece du type de la machine en comptant celle qui est envoyé
 	s_piece		piece;
 }				s_msg_env_sup;
 
