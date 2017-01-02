@@ -21,6 +21,12 @@ void			*fonc_thread(void *k)
 			break;
 		//do
 		// rep = msgrcv(...) ordre
+		//vider la file de message au cas ou il reste des message non lu du a la creation de piece 10min
+		// errno = 0;
+		//do
+		// rep =msgrcv(..., IPC_NOWAIT)
+		// if (rep != ENOMSG && rep != 0) { error("msgrcv creation_machine")}
+		//ou while (errno != ENOMSG)
 		// num_mach = struct.num;
 		//while(rep != num_mach)
 		//alarm(10min);
