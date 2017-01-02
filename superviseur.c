@@ -79,12 +79,12 @@ void superviseur(s_piece **piece)
 					alarm(20 * RATIO_TEMPS);//peut etre probleme car fonctionne avec sec...
 					usleep((1000000 * 20 - 10000) * RATIO_TEMPS * piece[i][j].def_in);
 					alarm(0);
-					fprintf(stdout, "Ok ! Piece sur le convoyeur\n");
+					puts()"Ok ! Piece sur le convoyeur\n");
 				}
 				else
 				{
 					/* On est arrive par SIGALRM */
-					fprintf(stdout, "\n==== Systeme en état de défaillance! ====\n");
+					puts("\n==== Systeme en état de défaillance! ====\n");
 					exit(EXIT_FAILURE);
 				}
 				sem_wait(sem_convoyeur);//peut etre a placer avant le usleep();
