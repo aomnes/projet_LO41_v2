@@ -4,6 +4,7 @@ void			*fonc_thread_out(void *k)
 {
 	(void)		*k;
     struct sigaction action;
+    s_piece     message;
 
     action.sa_handler = gestionnaire_sigalrm;
     action.sa_flags = 0;
@@ -15,7 +16,8 @@ void			*fonc_thread_out(void *k)
 	while (1)
 	{
         //ssize_t msgrcv(int msqid, void *msgp, size_t msgsz, long msgtyp, int msgflg);
-        message = msgrcv(...);
+        if (msgrcv(msgid_out, &message, sizeof(s_piece), NULL) == -1)
+            error("msgrcv msgid_out");
         if (sigsetjmp(contexte_sigalrm, 1) == 0)
         {
             /* premier passage, installation */
