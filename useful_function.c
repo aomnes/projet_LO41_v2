@@ -70,3 +70,18 @@ int     lire_numero_piece(int nb_piece)
     } while(d < 0 || d > nb_piece - 1);
     return (d);
 }
+
+int trouver_max(int *tab, int nb_element)
+{
+	int max;
+	int i;
+
+	max = tab[0];
+	while (i < nb_element)
+	{
+		if (max >= tab[index])
+			max = tab[index];
+		i++;
+	}
+	return (max);
+}

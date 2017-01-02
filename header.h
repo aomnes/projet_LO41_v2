@@ -54,6 +54,7 @@ int     lire_nombre_p(void);
 int     lire_nombre_defaut(void);
 int     lire_numero_type_def(int nb_machine);
 int     lire_numero_piece(int nb_piece);
+int		trouver_max(int *tab, int nb_element);
 
 typedef struct	s_piece
 {
