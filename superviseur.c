@@ -21,7 +21,7 @@ void superviseur(s_piece **piece)
 	struct sigaction action;
 	int msgid;
 	int somme;
-	int max_tab;
+	int max_piece_type;
 	int i;
 	int j;
 	int *nb_piece;
@@ -44,7 +44,7 @@ void superviseur(s_piece **piece)
 	//remplissage nb_piece
 	for (int count = 0; count < nb_machine; i++)
 			nb_piece[count] = sizeof(piece[count])/sizeof(s_piece);
-	max_tab = trouver_max(nb_piece, nb_machine);
+	max_piece_type = trouver_max(nb_piece, nb_machine);
 	sem_convoyeur = sem_open("/sem_convoyeur", O_RDWR);
 	if (sem_convoyeur == SEM_FAILED)
 	{
