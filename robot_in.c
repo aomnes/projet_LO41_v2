@@ -16,15 +16,18 @@ void			*fonc_thread_in(void *k)
     action.sa_flags = 0;
     sigfillset(& action.sa_mask);
     sigaction(SIGALRM, & action, NULL);
+    if ((msgid_in = msgget(CLEF, IPC_CREAT | IPC_EXCL | 0600)) == -1)
+		error("msgget Robot_in");
 	puts("Robot in allume\n");
 	while (1)
 	{
-        //msgrcv(...)
+        //ssize_t msgrcv(int msqid, void *msgp, size_t msgsz, long msgtyp, int msgflg);
+        //msgrcv( , sizeof(s_piece), )
         if (sigsetjmp(contexte_sigalrm, 1) == 0)
         {
             /* premier passage, installation */
             alarm(20 * RATIO_TEMPS);//peut etre probleme car fonctionne avec sec...
-            usleep((1000000 * 20 - 10000) * RATIO_TEMPS * piece.def_in);
+            usleep((1000000 * 20 - 10000) * RATIO_TEMPS * message.def_in);
             alarm(0);
             puts()"Ok ! Piece sur le convoyeur\n");
         }

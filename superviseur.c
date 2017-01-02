@@ -11,7 +11,6 @@
 
 void superviseur(s_piece **piece)
 {
-	int msgid;
 	int max_piece_type;
 	int i;
 	int j;
@@ -21,8 +20,8 @@ void superviseur(s_piece **piece)
 
 	i = 0;
 	j = 0;
-	if ((msgid = msgget(CLEF, 0)) == -1)
-		error("msgget");
+	if ((msgid_machine = msgget(CLEF, IPC_CREAT | IPC_EXCL | 0600)) == -1)
+		error("msgget msgid_machine");
 	nb_piece = (int*)malloc(sizeof(int) * nb_machine);
 	if (!nb_piece)
 		error("malloc nb_piece superviseur");

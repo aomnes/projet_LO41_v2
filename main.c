@@ -6,6 +6,7 @@ int			main(void)
 	s_piece **piece;
 
 	piece = NULL;
+	CLEF = ftok("/cle_shm", 'A');
 	puts("Bienvenue");
 	sleep(1);
 	//modification des signaux
@@ -13,6 +14,7 @@ int			main(void)
 	sleep(3);//attente de la creation des machines
 	piece = creation_piece(nb_machine, piece);//création des pièces
 	creation_convoyeur();//création du creation_convoyeur()
+	//ne pas oublier d ajouter le signal() dans pour suprimer les ipcs
 	pid = fork();//création du processus superviseur
 	switch(pid)
 	{

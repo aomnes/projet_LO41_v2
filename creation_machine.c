@@ -38,8 +38,6 @@ void			creation_machine(void)
 	int			i;
 	s_do_thr	*info_thread;
 
-	CLEF = ftok("/cle_shm", 'A');
-
 	puts("Combien voulez-vous de machines? (entrer autre chose que 0)");
 
 	nb_machine = lire_nombre_sp();

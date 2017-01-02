@@ -84,6 +84,10 @@ typedef struct	s_do_thr
 	int			nb_machine;
 }				s_do_thr;
 
+int msgid_in;
+int msgid_out;
+int msgid_machine;
+
 void		error(char *msg);
 
 void		superviseur(s_piece **piece);
