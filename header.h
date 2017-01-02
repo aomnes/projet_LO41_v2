@@ -87,6 +87,8 @@ typedef struct	s_do_thr
 void		error(char *msg);
 
 void		superviseur(s_piece **piece);
+void		creation_robot_in(void);
+void		creation_robot_out(void);
 s_piece		**creation_piece(int nb_machine, s_piece **piece);
 void		creation_machine(void);
 void		creation_convoyeur(void);
