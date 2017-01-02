@@ -16,22 +16,33 @@ void gestionnaire_sigalrm (int inutilise)
 	siglongjmp(contexte_sigalrm, 1);//echec du saut
 }
 
-void superviseur(int nb_piece, s_piece **piece)
+void superviseur(s_piece **piece)
 {
 	struct sigaction action;
 	int msgid;
 	int somme;
+	int i;
+	int j;
+	int *nb_piece;
 	s_msg_env_sup envoi;
 	s_msg_rcv_sup rep;
 
 	somme = 0;
+	i = 0;
+	j = 0;
 	if ((msgid = msgget(CLEF, 0)) == -1)
 		error("msgget");
-
+	nb_piece = (int*)malloc(sizeof(int) * nb_machine);
+	if (!nb_piece)
+		error("malloc nb_piece superviseur");
 	action.sa_handler = gestionnaire_sigalrm;
 	action.sa_flags = 0;
 	sigfillset(& action.sa_mask);
 	sigaction(SIGALRM, & action, NULL);
+
+	//remplissage nb_piece
+	for (int count = 0; count < nb_machine; i++)
+			nb_piece[count] = sizeof(piece[count])/sizeof(s_piece);
 
 	sem_convoyeur = sem_open("/sem_convoyeur", O_RDWR);
 	if (sem_convoyeur == SEM_FAILED)
@@ -55,6 +66,7 @@ void superviseur(int nb_piece, s_piece **piece)
 
 	while (somme != somme_piece_sup)
 	{
+		while ()
 		sem_post(sem_convoyeur);
 		//msgsnd("envoyer piece convoyeur");
 		sleep(1);
@@ -75,7 +87,7 @@ void superviseur(int nb_piece, s_piece **piece)
 		}
 		sem_wait(sem_convoyeur);//peut etre a placer avant le usleep();
 		sem_wait(sem_machine);
-		printf("la piece %d est sur le convoyeur\n", nb_piece);
+		puts("la piece est sur le convoyeur\n");
 		somme++;
 	}
 }
