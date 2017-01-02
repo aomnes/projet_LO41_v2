@@ -25,7 +25,7 @@ void			*fonc_thread(void *k)
 		//while(rep != num_mach)
 		//alarm(10min);
 		//msgsnd(...) compte rendu
-		//msgrcv("env conv");
+		//msgrcv("env conv" robot_out);
 	}
 	printf("Machine %d eteinte\n", info_thread->num_thread);
     return (NULL);

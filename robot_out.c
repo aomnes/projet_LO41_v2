@@ -13,11 +13,12 @@ void			*fonc_thread_out(void *k)
 	puts("Robot out allume\n");
 	while (1)
 	{
+        //msgrcv(...)
         if (sigsetjmp(contexte_sigalrm, 1) == 0)
         {
             /* premier passage, installation */
             alarm(20 * RATIO_TEMPS);//peut etre probleme car fonctionne avec sec...
-            usleep((1000000 * 20 - 10000) * RATIO_TEMPS * piece[i][j].def_in);
+            usleep((1000000 * 20 - 10000) * RATIO_TEMPS * piece.def_in);
             alarm(0);
             puts()"Ok ! Piece sur le convoyeur\n");
         }
