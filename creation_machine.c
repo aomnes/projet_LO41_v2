@@ -21,7 +21,7 @@ void			*fonc_thread(void *k)
 		// num_mach = struct.num;
 		//while(rep != num_mach)
 		//alarm(10min);
-		// msgsnd(...) compte rendu
+		//msgsnd(...) compte rendu
 		//msgrcv("env conv");
 	}
 	printf("Machine %d eteinte\n", info_thread->num_thread);

@@ -51,8 +51,6 @@ void superviseur(int nb_piece, s_piece **piece)
 			error("sem_open/init/machine");
 	}
 
-
-
 	while (nb_piece)
 	{
 
