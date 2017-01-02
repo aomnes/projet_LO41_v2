@@ -16,7 +16,7 @@ void			*fonc_thread_out(void *k)
 	while (1)
 	{
         //ssize_t msgrcv(int msqid, void *msgp, size_t msgsz, long msgtyp, int msgflg);
-        if (msgrcv(msgid_out, &message, sizeof(s_piece), NULL) == -1)
+        if (msgrcv(msgid_out, &message, sizeof(s_piece), 0, 0) == -1)
             error("msgrcv msgid_out");
         if (sigsetjmp(contexte_sigalrm, 1) == 0)
         {
@@ -24,7 +24,7 @@ void			*fonc_thread_out(void *k)
             alarm(20 * RATIO_TEMPS);//peut etre probleme car fonctionne avec sec...
             usleep((1000000 * 20 - 10000) * RATIO_TEMPS * message.def_out);
             alarm(0);
-            puts()"Ok ! Piece sur le convoyeur\n");
+            puts("Ok ! Piece sur le convoyeur\n");
         }
         else
         {

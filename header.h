@@ -15,8 +15,6 @@
 #include <pthread.h>
 #include <sys/wait.h>
 
-#include <sys/types.h>
-
 #include <time.h>
 
 #include <semaphore.h>
@@ -26,6 +24,10 @@
 #include <fcntl.h>
 
 #include <sys/shm.h>
+
+#include <sys/types.h>
+#include <sys/ipc.h>
+#include <sys/msg.h>
 
 key_t		CLEF;
 
@@ -89,6 +91,7 @@ int msgid_out;
 int msgid_machine;
 
 void		error(char *msg);
+void 		gestionnaire_sigalrm(int inutilise);
 
 void		superviseur(s_piece **piece);
 void		creation_robot_in(void);
