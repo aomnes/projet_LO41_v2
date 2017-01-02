@@ -59,7 +59,8 @@ void superviseur(s_piece **piece)
 			if (j < nb_piece[j])
 			{
 				sem_post(sem_convoyeur);//attente du convoyeur libre
-				//msgsnd("envoyer piece convoyeur");
+				if (msgsnd(msgid_in, piece[i][j], sizeof(s_piece), 0) == -1)
+					error("msgsnd msgid_in sup.c");
 				sleep(1);
 				//msgsnd("machine retire");
 				//message robot_in
