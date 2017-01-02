@@ -41,6 +41,7 @@ s_piece		**creation_piece(int nb_machine, s_piece **piece)
         nb_type_piece2--;
     }
     printf("\nVoici la somme des pieces: %d\n\n", somme_piece);
+	somme_piece_sup = somme_piece;
 	if (!somme_piece)
 	{
 		puts("Vous n'avez cree aucune piece");

@@ -35,6 +35,7 @@ sem_t *sem_convoyeur;
 sem_t *sem_machine;
 
 int nb_machine;
+int somme_piece_sup;
 
 #define CONVOYER_VERIF 0 //nb pour les semaphores
 #define MACHINE_VERIF 1

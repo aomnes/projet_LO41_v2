@@ -19,11 +19,12 @@ void gestionnaire_sigalrm (int inutilise)
 void superviseur(int nb_piece, s_piece **piece)
 {
 	struct sigaction action;
-
 	int msgid;
+	int somme;
 	s_msg_env_sup envoi;
 	s_msg_rcv_sup rep;
 
+	somme = 0;
 	if ((msgid = msgget(CLEF, 0)) == -1)
 		error("msgget");
 
@@ -52,7 +53,7 @@ void superviseur(int nb_piece, s_piece **piece)
 			error("sem_open/init/machine");
 	}
 
-	while (nb_piece)
+	while (somme != somme_piece_sup)
 	{
 		sem_post(sem_convoyeur);
 		//msgsnd("envoyer piece convoyeur");
@@ -75,6 +76,6 @@ void superviseur(int nb_piece, s_piece **piece)
 		sem_wait(sem_convoyeur);//peut etre a placer avant le usleep();
 		sem_wait(sem_machine);
 		printf("la piece %d est sur le convoyeur\n", nb_piece);
-
+		somme++;
 	}
 }
