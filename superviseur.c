@@ -67,7 +67,7 @@ void superviseur(s_piece **piece)
 	{
 		while (i < nb_machine)
 		{
-			if (i < nb_piece[j])
+			if (j < nb_piece[j])
 			{
 				sem_post(sem_convoyeur);
 				//msgsnd("envoyer piece convoyeur");
