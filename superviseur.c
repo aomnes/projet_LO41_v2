@@ -66,28 +66,34 @@ void superviseur(s_piece **piece)
 
 	while (somme != somme_piece_sup)
 	{
-		while ()
-		sem_post(sem_convoyeur);
-		//msgsnd("envoyer piece convoyeur");
-		sleep(1);
-		//msgsnd("machine retire");
-		if (sigsetjmp(contexte_sigalrm, 1) == 0)
+		while (j <= max_piece_type)
 		{
-			/* premier passage, installation */
-			alarm(20 * RATIO_TEMPS);//peut etre probleme car fonctionne avec sec...
-//			usleep((1000000 * 20 - 10000) * RATIO_TEMPS * piece[][].defaut);
-			alarm(0);
-			fprintf(stdout, "Ok ! Piece sur le convoyeur\n");
+			while (i < nb_machine)
+			{
+
+			}
+			sem_post(sem_convoyeur);
+			//msgsnd("envoyer piece convoyeur");
+			sleep(1);
+			//msgsnd("machine retire");
+			if (sigsetjmp(contexte_sigalrm, 1) == 0)
+			{
+				/* premier passage, installation */
+				alarm(20 * RATIO_TEMPS);//peut etre probleme car fonctionne avec sec...
+	//			usleep((1000000 * 20 - 10000) * RATIO_TEMPS * piece[][].defaut);
+				alarm(0);
+				fprintf(stdout, "Ok ! Piece sur le convoyeur\n");
+			}
+			else
+			{
+				/* On est arrive par SIGALRM */
+				fprintf(stdout, "\n==== Systeme en état de défaillance! ====\n");
+				exit(EXIT_FAILURE);
+			}
+			sem_wait(sem_convoyeur);//peut etre a placer avant le usleep();
+			sem_wait(sem_machine);
+			puts("la piece est sur le convoyeur\n");
+			somme++;
 		}
-		else
-		{
-			/* On est arrive par SIGALRM */
-			fprintf(stdout, "\n==== Systeme en état de défaillance! ====\n");
-			exit(EXIT_FAILURE);
-		}
-		sem_wait(sem_convoyeur);//peut etre a placer avant le usleep();
-		sem_wait(sem_machine);
-		puts("la piece est sur le convoyeur\n");
-		somme++;
 	}
 }
