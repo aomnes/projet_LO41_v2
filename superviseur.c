@@ -77,7 +77,7 @@ void superviseur(s_piece **piece)
 				{
 					/* premier passage, installation */
 					alarm(20 * RATIO_TEMPS);//peut etre probleme car fonctionne avec sec...
-		//			usleep((1000000 * 20 - 10000) * RATIO_TEMPS * piece[][].defaut);
+					usleep((1000000 * 20 - 10000) * RATIO_TEMPS * piece[i][j].def_in);
 					alarm(0);
 					fprintf(stdout, "Ok ! Piece sur le convoyeur\n");
 				}
