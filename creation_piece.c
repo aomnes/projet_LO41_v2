@@ -13,7 +13,6 @@ s_piece		**creation_piece(int nb_machine, s_piece **piece)
 	int		num_def_piece;
 	int 	defaut_machine;
 
-	srand(time(NULL));
     nb_type_piece = nb_machine;
     nb_type_piece2 = nb_machine;
     somme_piece = 0;
