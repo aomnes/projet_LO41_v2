@@ -9,12 +9,20 @@ void			*fonc_thread(void *k)
 
 	info_thread = (s_do_thr*)k;
 	printf("Machine %d allumee\n", info_thread->num_thread);
+
+	//do
+	// rep = msgrcv(...)
+	//while(rep != num_mach)
+
 	while (1)
 	{
-		sem_wait(sem_machine);
-
-		sem_post(sem_machine);
-		sem_post(sem_convoyeur);
+		//do
+		// rep = msgrcv(...) ordre
+		// num_mach = struct.num;
+		//while(rep != num_mach)
+		//alarm(10min);
+		// msgsnd(...) compte rendu
+		//msgrcv("env conv");
 	}
 	printf("Machine %d eteinte\n", info_thread->num_thread);
     return (NULL);

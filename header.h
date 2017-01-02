@@ -62,6 +62,19 @@ typedef struct	s_piece
 	bool		def_work_machine;
 }				s_piece;
 
+typedef struct	s_msg_env_sup
+{
+	int			num_machine;
+	s_piece		piece;
+}				s_msg_env_sup;
+
+typedef struct	s_msg_rcv_sup
+{
+	int		status;//1 piece fini --> 2 machine defaillance
+	int		num_machine;
+
+}				s_msg_rcv_sup;
+
 typedef struct	s_do_thr
 {
 	int			num_thread;
