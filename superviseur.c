@@ -62,9 +62,7 @@ void superviseur(s_piece **piece)
 					error("msgsnd msgid_in sup.c");
 				sleep(1);
 				//msgsnd("machine retire");
-				//message robot_in
-				sem_wait(sem_convoyeur);//peut etre a placer avant le usleep();
-				sem_wait(sem_machine);
+				sem_wait(sem_convoyeur);
 				puts("la piece est sur le convoyeur\n");
 			}
 			//else nothing
