@@ -5,6 +5,7 @@ void			*fonc_thread_out(void *k)
 	(void)		*k;
     struct sigaction action;
     s_piece     message;
+    int         ratio_defaut;
 
     action.sa_handler = gestionnaire_sigalrm;
     action.sa_flags = 0;
@@ -12,6 +13,10 @@ void			*fonc_thread_out(void *k)
     sigaction(SIGALRM, & action, NULL);
     if ((msgid_out = msgget(CLEF, IPC_CREAT | IPC_EXCL | 0600)) == -1)
 		error("msgget robot_out");
+    if (message.def_out)
+        ratio_defaut = 2;
+    else
+        ratio_defaut = 1;
 	puts("Robot out allume\n");
 	while (1)
 	{
@@ -22,7 +27,7 @@ void			*fonc_thread_out(void *k)
         {
             /* premier passage, installation */
             alarm(20 * RATIO_TEMPS);//peut etre probleme car fonctionne avec sec...
-            usleep((1000000 * 20 - 10000) * RATIO_TEMPS * message.def_out);
+            usleep((1000000 * 20 - 10000) * RATIO_TEMPS * ratio_defaut);
             alarm(0);
             puts("Ok ! Piece sur le convoyeur\n");
         }
