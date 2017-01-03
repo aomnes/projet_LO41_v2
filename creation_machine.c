@@ -11,29 +11,20 @@ void				*fonc_thread(void *k)
 
 	info_thread = (s_do_thr*)k;
 	printf("Machine %d allumee\n", info_thread->num_thread);
-
-	do
+	//attendre la creation des pieces;
+	if (!nb_piece_sup[info_thread->num_thread])
 	{
-		if (msgrcv(msgid_machine, &rep, sizeof(s_msg_env_sup), 0, 0) == -1)
-			error("msgrcv creation_machine rep #1");
-	} while (info_thread->num_thread != rep.num_machine);
-	//ne pas oublier eteindre la si la machine n a pas de pieces (!nb_piece_type)
-	do
-	{
-		errno = 0;
-		valeur_out_msgrcv = msgrcv(msgid_machine, &rep, sizeof(s_msg_env_sup), 0, IPC_NOWAIT);
-		 if (errno != ENOMSG && valeur_out_msgrcv != 0)
-			error("msgrcv creation_machine vide file message #1");
-	} while (errno != ENOMSG);//vider file de message
-
+		puts("Machine %d eteinte car pas de piece");
+		return (NULL);//pas exit sinon extinction de toutes les machines et du processus entier
+	}
 	while (1)
 	{
-		if (!rep.nb_piece_type)//nb_recu par msgrcv(); pb ==> si pas de piece alors on allume pas la machine donc pas de message a envoyer utilisation varaible globale
+		if (!rep.nb_piece_type)//nb_recu par msgrcv();
 			break;
 		do
 		{
 			if (msgrcv(msgid_machine, &rep, sizeof(s_msg_env_sup), 0, 0) == -1)
-				error("msgrcv creation_machine rep #2");
+				error("msgrcv creation_machine rep #1");
 		} while (info_thread->num_thread != rep.num_machine);
 		do
 		{
@@ -46,7 +37,7 @@ void				*fonc_thread(void *k)
 		alarm(1);
 		//msgsnd(...) compte rendu
 		if (msgsnd(msgid_in, &rep.piece, sizeof(s_piece), 0) == -1)
-			error("msgsnd msgid_out");
+			error("msgsnd msgid_out creation_machine.c");
 	}
 	printf("Machine %d eteinte\n", info_thread->num_thread);
     return (NULL);

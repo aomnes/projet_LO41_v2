@@ -14,7 +14,6 @@ void superviseur(s_piece **piece)
 	int max_piece_type;
 	int i;
 	int j;
-	int *nb_piece;
 	s_msg_env_sup envoi;
 	s_msg_rcv_sup rep;
 
@@ -22,14 +21,14 @@ void superviseur(s_piece **piece)
 	j = 0;
 	if ((msgid_machine = msgget(CLEF, IPC_CREAT | IPC_EXCL | 0600)) == -1)
 		error("msgget msgid_machine");
-	nb_piece = (int*)malloc(sizeof(int) * nb_machine);
-	if (!nb_piece)
-		error("malloc nb_piece superviseur");
+	nb_piece_sup = (int*)malloc(sizeof(int) * nb_machine);
+	if (!nb_piece_sup)
+		error("malloc nb_piece_sup superviseur");
 
-	//remplissage nb_piece
+	//remplissage nb_piece_sup
 	for (int count = 0; count < nb_machine; i++)
-			nb_piece[count] = sizeof(piece[count])/sizeof(s_piece);
-	max_piece_type = trouver_max(nb_piece, nb_machine);
+			nb_piece_sup[count] = sizeof(piece[count])/sizeof(s_piece);
+	max_piece_type = trouver_max(nb_piece_sup, nb_machine);
 	sem_convoyeur = sem_open("/sem_convoyeur", O_RDWR);
 	if (sem_convoyeur == SEM_FAILED)
 	{
@@ -56,7 +55,7 @@ void superviseur(s_piece **piece)
 	{
 		while (i < nb_machine)
 		{
-			if (j < nb_piece[i])
+			if (j < nb_piece_sup[i])
 			{
 				sem_post(sem_convoyeur);//attente du convoyeur libre
 				if (msgsnd(msgid_in, &piece[i][j], sizeof(s_piece), 0) == -1)
