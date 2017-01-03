@@ -19,8 +19,6 @@ void				*fonc_thread(void *k)
 	}
 	while (1)
 	{
-		if (!rep.nb_piece_type)//nb_recu par msgrcv();
-			break;
 		do
 		{
 			if (msgrcv(msgid_machine, &rep, sizeof(s_msg_env_sup), 0, 0) == -1)
@@ -38,6 +36,8 @@ void				*fonc_thread(void *k)
 		//msgsnd(...) compte rendu
 		if (msgsnd(msgid_in, &rep.piece, sizeof(s_piece), 0) == -1)
 			error("msgsnd msgid_out creation_machine.c");
+		if (!(rep.nb_piece_type - 1))//nb_recu par msgrcv(); ==> plus de pieces apres celle-ci donc FIN
+			break;
 	}
 	printf("Machine %d eteinte\n", info_thread->num_thread);
     return (NULL);
