@@ -2,7 +2,7 @@ NAME = usine.out
 CC = gcc
 INCLUDE = header.h
 SRCS = creation_convoyeur.c robot_in.c useful_function.c creation_machine.c\
-	main.c robot_out.c creation_piece.c superviseur.c
+	main.c robot_out.c creation_piece.c superviseur.c robot_install_table.c
 CFLAGS = -Wall -Wextra -Werror
 COPTIONS = -o $(NAME) -I $(INCLUDE)
 
