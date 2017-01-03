@@ -33,12 +33,12 @@ key_t		CLEF;
 
 sigjmp_buf	contexte_sigalrm;
 
-sem_t *sem_convoyeur;
-sem_t *sem_machine;
+sem_t 		*sem_convoyeur;
+sem_t 		*sem_machine;
 
-int nb_machine;
-int somme_piece_sup;
-int *nb_piece_sup;
+int 		nb_machine;
+int 		somme_piece_sup;
+int 		*nb_piece_sup;
 
 #define CONVOYER_VERIF 0 //nb pour les semaphores
 #define MACHINE_VERIF 1
@@ -76,8 +76,8 @@ typedef struct	s_msg_env_sup
 
 typedef struct	s_msg_rcv_sup
 {
-	int		status;//1 piece fini --> 2 machine defaillance
-	int		num_machine;
+	int			status;//1 piece fini --> 2 machine defaillance
+	int			num_machine;
 
 }				s_msg_rcv_sup;
 
@@ -90,6 +90,7 @@ typedef struct	s_do_thr
 int msgid_in;
 int msgid_out;
 int msgid_machine;
+int msgid_rbt_inst_table;
 
 void		error(char *msg);
 void 		gestionnaire_sigalrm(int inutilise);
