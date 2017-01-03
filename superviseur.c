@@ -56,10 +56,10 @@ void superviseur(s_piece **piece)
 	{
 		while (i < nb_machine)
 		{
-			if (j < nb_piece[j])
+			if (j < nb_piece[i])
 			{
 				sem_post(sem_convoyeur);//attente du convoyeur libre
-				if (msgsnd(msgid_in, piece[i][j], sizeof(s_piece), 0) == -1)
+				if (msgsnd(msgid_in, &piece[i][j], sizeof(s_piece), 0) == -1)
 					error("msgsnd msgid_in sup.c");
 				sleep(1);
 				//msgsnd("machine retire");

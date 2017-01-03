@@ -22,7 +22,7 @@ void			*fonc_thread(void *k)
 		//do
 		// rep = msgrcv(...) ordre
 		//vider la file de message au cas ou il reste des message non lu du a la creation de piece 10min
-		// errno = 0;
+		// errno = 0;//au plus proche du msgsnd pour eviter tout pb de changement de errno...
 		//do
 		// rep =msgrcv(..., IPC_NOWAIT)
 		// if (rep != ENOMSG && rep != 0) { error("msgrcv creation_machine")}

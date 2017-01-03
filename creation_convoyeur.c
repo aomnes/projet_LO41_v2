@@ -16,7 +16,7 @@ void			*fonc_thread_conv(void *k)
 	}
 	puts("Convoyeur eteint\n");
     return (NULL);
-} 
+}
 
 
 void			creation_convoyeur(void)
