@@ -23,18 +23,19 @@ void			*fonc_thread_out(void *k)
         //ssize_t msgrcv(int msqid, void *msgp, size_t msgsz, long msgtyp, int msgflg);
         if (msgrcv(msgid_out, &message, sizeof(s_piece), 0, 0) == -1)
             error("msgrcv msgid_out");
+        sem_post(sem_convoyeur);//piece n est plus sur le convoyeur
         if (sigsetjmp(contexte_sigalrm, 1) == 0)
         {
             /* premier passage, installation */
             alarm(20 * RATIO_TEMPS);//peut etre probleme car fonctionne avec sec...
             usleep((1000000 * 20 - 10000) * RATIO_TEMPS * ratio_defaut);
             alarm(0);
-            puts("Ok ! Piece sur le convoyeur\n");
+            puts("Ok ! Piece sur dans le depot\n");
         }
         else
         {
             /* On est arrive par SIGALRM */
-            puts("\n==== Systeme en état de défaillance! ====\n");
+            puts("\n==== Systeme en état de défaillance Robot_out! ====\n");
             exit(EXIT_FAILURE);
         }
 	}

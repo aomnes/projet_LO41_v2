@@ -37,11 +37,12 @@ void			*fonc_thread_in(void *k)
             usleep((1000000 * 20 - 10000) * RATIO_TEMPS * ratio_defaut);
             alarm(0);
             puts("Ok ! Piece sur le convoyeur\n");
+            sem_wait(sem_convoyeur);//piece est sur le convoyeur
         }
         else
         {
             /* On est arrive par SIGALRM */
-            puts("\n==== Systeme en état de défaillance! ====\n");
+            puts("\n==== Systeme en état de défaillance Robot_in! ====\n");
             exit(EXIT_FAILURE);
         }
 	}

@@ -91,6 +91,7 @@ int msgid_in;
 int msgid_out;
 int msgid_machine;
 int msgid_rbt_inst_table;
+int msgid_rbt_vers_table;
 
 void		error(char *msg);
 void 		gestionnaire_sigalrm(int inutilise);

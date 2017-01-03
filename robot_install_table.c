@@ -13,6 +13,8 @@ void			*fonc_thread_rbt_install(void *k)
     sigaction(SIGALRM, & action, NULL);
     if ((msgid_rbt_inst_table = msgget(CLEF, IPC_CREAT | IPC_EXCL | 0600)) == -1)
 		error("msgget msgid_rbt_inst_table");
+    if ((msgid_rbt_vers_table = msgget(CLEF, IPC_CREAT | IPC_EXCL | 0600)) == -1)
+		error("msgget msgid_rbt_vers_table");
     if (message.def_retire_conv)
         ratio_defaut = 2;
     else
@@ -29,14 +31,15 @@ void			*fonc_thread_rbt_install(void *k)
             alarm(50 * RATIO_TEMPS);//peut etre probleme car fonctionne avec sec...
             usleep((1000000 * 50 - 10000) * RATIO_TEMPS * ratio_defaut);
             alarm(0);
-            if (msgsnd(msgid_rbt_inst_table, &message, sizeof(s_piece), 0) == -1)
-                error("msgrcv msgid_rbt_inst_table");
+            if (msgsnd(msgid_rbt_vers_table, &message, sizeof(s_piece), 0) == -1)
+                error("msgsnd msgid_rbt_vers_table");
+            sem_post(sem_convoyeur);//piece n est plus sur le convoyeur
             puts("Ok ! Piece sur la table\n");
         }
         else
         {
             /* On est arrive par SIGALRM */
-            puts("\n==== Systeme en état de défaillance! ====\n");
+            puts("\n==== Systeme en état de défaillance Robot_intall_table! ====\n");
             exit(EXIT_FAILURE);
         }
 	}

@@ -38,6 +38,7 @@ void				*fonc_thread(void *k)
 			error("msgsnd msgid_out creation_machine.c");
 		if (!(rep.nb_piece_type - 1))//nb_recu par msgrcv(); ==> plus de pieces apres celle-ci donc FIN
 			break;
+		puts("Piece fini d usiner est sur le convoyeur");
 	}
 	printf("Machine %d eteinte\n", info_thread->num_thread);
     return (NULL);
