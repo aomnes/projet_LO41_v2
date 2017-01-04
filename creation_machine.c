@@ -21,22 +21,22 @@ void				*fonc_thread(void *k)
 	{
 		do
 		{
-			if (msgrcv(msgid_machine, &rep, sizeof(info_trs), 0, 0) == -1)
+			if (msgrcv(msgid_machine, &rep, sizeof(s_info_trs), 0, 0) == -1)
 				error("msgrcv creation_machine rep #1");
 		} while (info_thread->num_thread != rep.num_machine);//si machine bonne (car plusieurs thread)
 		do
 		{
 			errno = 0;
-			valeur_out_msgrcv = msgrcv(msgid_machine, &rep, sizeof(info_trs), 0, IPC_NOWAIT);
+			valeur_out_msgrcv = msgrcv(msgid_machine, &rep, sizeof(s_info_trs), 0, IPC_NOWAIT);
 			 if (errno != ENOMSG && valeur_out_msgrcv != 0)
 				error("msgrcv creation_machine vide file message #2");
 		} while (errno != ENOMSG);//vider file de message
 
 		sleep(1);
 		//msgsnd(...) compte rendu
-		if (msgsnd(msgid_cmpt_rendu_mach, &rep.piece, sizeof(cmpt_rendu), 0) == -1)
+		if (msgsnd(msgid_cmpt_rendu_mach, &rep.piece, sizeof(s_cmpt_rendu), 0) == -1)
 			error("msgsnd msgid_cmpt_rendu_mach creation_machine.c");
-		if (msgrcv(msgid_fin_go, &rep, sizeof(info_trs), 0, 0) == -1)
+		if (msgrcv(msgid_fin_go, &rep, sizeof(s_info_trs), 0, 0) == -1)
 			error("msgrcv creation_machine rep msgid_fin_go");
 		puts("Piece fini d usiner est sur le convoyeur");
 		if (!(rep.nb_piece_restante - 1))//nb_recu par msgrcv(); ==> plus de pieces apres celle-ci donc FIN
