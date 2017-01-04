@@ -4,7 +4,7 @@ void                    *fonc_thread_rbt_install(void *k)
 {
 	(void)              *k;
     struct sigaction    action;
-    s_msg_env_sup       message;
+    s_info_trs          message;
     int                 ratio_defaut;
 
     action.sa_handler = gestionnaire_sigalrm;
@@ -13,8 +13,6 @@ void                    *fonc_thread_rbt_install(void *k)
     sigaction(SIGALRM, & action, NULL);
     if ((msgid_rbt_inst_table = msgget(CLEF, IPC_CREAT | IPC_EXCL | 0600)) == -1)
 		error("msgget msgid_rbt_inst_table");
-    if ((msgid_rbt_vers_table = msgget(CLEF, IPC_CREAT | IPC_EXCL | 0600)) == -1)
-		error("msgget msgid_rbt_vers_table");
     if (message.def_retire_conv)
         ratio_defaut = 2;
     else
@@ -23,7 +21,7 @@ void                    *fonc_thread_rbt_install(void *k)
 	while (1)
 	{
         //ssize_t msgrcv(int msqid, void *msgp, size_t msgsz, long msgtyp, int msgflg);
-        if (msgrcv(msgid_rbt_inst_table, &message, sizeof(s_msg_env_sup), 0, 0) == -1)
+        if (msgrcv(msgid_rbt_inst_table, &message, sizeof(s_info_trs), 0, 0) == -1)
             error("msgrcv msgid_rbt_inst_table");
         if (sigsetjmp(contexte_sigalrm, 1) == 0)
         {
@@ -32,9 +30,9 @@ void                    *fonc_thread_rbt_install(void *k)
             usleep((1000000 * 50 - 10000) * RATIO_TEMPS * ratio_defaut);
             alarm(0);
             //envoyer a tous les tread x nb_machine
-            for (int count = 0; 0 < nb_machine; i++)
+            for (int count = 0; 0 < nb_machine; count++)
             {
-                if (msgsnd(msgid_machine, &message, sizeof(s_msg_env_sup), 0) == -1)
+                if (msgsnd(msgid_machine, &message, sizeof(s_info_trs), 0) == -1)
                     error("msgsnd msgid_machine");
             }
             sem_post(sem_convoyeur);//piece n est plus sur le convoyeur

@@ -67,19 +67,18 @@ typedef struct	s_piece
 	bool		def_work_machine;
 }				s_piece;
 
-typedef struct	s_msg_env_sup
+typedef struct	s_info_trs
 {
 	int			num_machine;
 	int			num_piece;//piece restante pour la machine en comptant celle qui est envoyé
 	s_piece		piece;
-}				s_msg_env_sup;
+}				s_info_trs;
 
-typedef struct	s_msg_rcv_sup
+typedef struct	s_cmpt_rendu
 {
 	int			status;//1 piece fini --> 2 machine defaillance
-	int			num_machine;
-
-}				s_msg_rcv_sup;
+	s_info_trs 	info_precedentes;
+}				s_cmpt_rendu;
 
 typedef struct	s_do_thr
 {

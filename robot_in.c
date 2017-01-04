@@ -11,22 +11,22 @@ void			        *fonc_thread_in(void *k)
 {
 	(void)		        *k;
     struct sigaction    action;
-    s_msg_env_sup       message;
+    s_info_trs          message;
     int                 ratio_defaut;
 
     action.sa_handler = gestionnaire_sigalrm;
     action.sa_flags = 0;
-    sigfillset(& action.sa_mask);
-    sigaction(SIGALRM, & action, NULL);
+    sigfillset(&action.sa_mask);
+    sigaction(SIGALRM, &action, NULL);
     if ((msgid_in = msgget(CLEF, IPC_CREAT | IPC_EXCL | 0600)) == -1)
 		error("msgget Robot_in");
 	puts("Robot in allume\n");
 	while (1)
 	{
         //ssize_t msgrcv(int msqid, void *msgp, size_t msgsz, long msgtyp, int msgflg);
-        if (msgrcv(msgid_in, &message, sizeof(s_msg_env_sup), 0, 0) == -1)
+        if (msgrcv(msgid_in, &message, sizeof(s_info_trs), 0, 0) == -1)
             error("msgrcv msgid_in");
-        if (message.(piece.def_in))
+        if (message.piece.def_in)
             ratio_defaut = 2;
         else
             ratio_defaut = 1;
@@ -37,7 +37,7 @@ void			        *fonc_thread_in(void *k)
             usleep((1000000 * 20 - 10000) * RATIO_TEMPS * ratio_defaut);
             alarm(0);
             puts("Ok ! Piece sur le convoyeur (Robot_in)\n");
-            if (msgsnd(msgid_rbt_inst_table, &message, sizeof(s_msg_env_sup), 0) == -1)
+            if (msgsnd(msgid_rbt_inst_table, &message, sizeof(s_info_trs), 0) == -1)
                 error("msgsnd msgid_in -> msgid_rbt_inst_table");
             sem_wait(sem_convoyeur);//piece est sur le convoyeur
         }

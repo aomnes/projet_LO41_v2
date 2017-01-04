@@ -15,8 +15,8 @@ void superviseur(s_piece **piece)
 	int i;
 	int j;
 	int somme;
-	s_msg_env_sup envoi;
-	s_msg_rcv_sup rep;
+	s_info_trs envoi;
+	s_info_trs rep;
 
 	i = 0;
 	j = 0;
@@ -65,7 +65,7 @@ void superviseur(s_piece **piece)
 				envoi.num_machine = i;
 				envoi.num_piece = j;
 				envoi.piece = piece[i][j];
-				if (msgsnd(msgid_in, &envoi, sizeof(s_msg_env_sup), 0) == -1)
+				if (msgsnd(msgid_in, &envoi, sizeof(s_info_trs), 0) == -1)
 					error("msgsnd msgid_in sup.c");
 				sleep(1);
 			}
@@ -76,7 +76,7 @@ void superviseur(s_piece **piece)
 
 		while (somme != somme_piece_sup)
 		{
-			if (msgrcv(msgid_cmpt_rendu_mach, &message, sizeof(message), 0, 0) == -1)//recoit rapport
+			if (msgrcv(msgid_cmpt_rendu_mach, &message, sizeof(s_cmpt_rendu), 0, 0) == -1)//recoit rapport
 				error("msgrcv msgid_cmpt_rendu_mach sup.c");
 			if (status == defaillance machine)
 			{
@@ -84,12 +84,12 @@ void superviseur(s_piece **piece)
 			}
 			else
 			{
-				if (msgsnd(msgid_fin_go, &message, sizeof(message), 0, 0) == -1)//ok va y
+				if (msgsnd(msgid_fin_go, &message, sizeof(s_info_trs), 0, 0) == -1)//ok va y
 					error("msgsnd msgid_fin_go sup.c");
-				if (msgsnd(msgid_out, &message, sizeof(message), 0, 0) == -1)//ok va y
+				if (msgsnd(msgid_out, &message, sizeof(s_info_trs), 0, 0) == -1)//ok va y
 					error("msgsnd msgid_out sup.c");
 			sem_post(sem_convoyeur);//attente du convoyeur libre
-			if (msgsnd(msgid_in, &envoi, sizeof(s_msg_env_sup), 0) == -1)
+			if (msgsnd(msgid_in, &envoi, sizeof(s_info_trs), 0) == -1)
 				error("msgsnd msgid_in sup.c");
 			//lui envoi une piece
 			}

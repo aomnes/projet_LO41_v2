@@ -1,11 +1,11 @@
 #include "header.h"
 
-void			*fonc_thread_out(void *k)
+void		        	*fonc_thread_out(void *k)
 {
-	(void)		*k;
-    struct sigaction action;
-    s_piece     message;
-    int         ratio_defaut;
+	(void)	        	*k;
+    struct sigaction    action;
+    s_info_trs            message;
+    int                 ratio_defaut;
 
     action.sa_handler = gestionnaire_sigalrm;
     action.sa_flags = 0;
@@ -17,9 +17,9 @@ void			*fonc_thread_out(void *k)
 	while (1)
 	{
         //ssize_t msgrcv(int msqid, void *msgp, size_t msgsz, long msgtyp, int msgflg);
-        if (msgrcv(msgid_out, &message, sizeof(s_piece), 0, 0) == -1)
+        if (msgrcv(msgid_out, &message, sizeof(s_info_trs), 0, 0) == -1)
             error("msgrcv msgid_out");
-        if (piece.def_out)
+        if (message.def_out)
             ratio_defaut = 2;
         else
             ratio_defaut = 1;
