@@ -23,7 +23,7 @@ void				*fonc_thread(void *k)
 		{
 			if (msgrcv(msgid_machine, &rep, sizeof(s_msg_env_sup), 0, 0) == -1)
 				error("msgrcv creation_machine rep #1");
-		} while (info_thread->num_thread != rep.num_machine);
+		} while (info_thread->num_thread != rep.num_machine);//si machine bonne (car plusieurs thread)
 		do
 		{
 			errno = 0;
@@ -32,13 +32,15 @@ void				*fonc_thread(void *k)
 				error("msgrcv creation_machine vide file message #2");
 		} while (errno != ENOMSG);//vider file de message
 
-		alarm(1);
+		sleep(1);
 		//msgsnd(...) compte rendu
-		if (msgsnd(msgid_in, &rep.piece, sizeof(s_piece), 0) == -1)
-			error("msgsnd msgid_out creation_machine.c");
-		if (!(rep.nb_piece_type - 1))//nb_recu par msgrcv(); ==> plus de pieces apres celle-ci donc FIN
-			break;
+		if (msgsnd(msgid_cmpt_rendu_mach, &rep.piece, sizeof(s_piece), 0) == -1)
+			error("msgsnd msgid_cmpt_rendu_mach creation_machine.c");
+		if (msgrcv(msgid_fin_go, &rep, sizeof(s_msg_env_sup), 0, 0) == -1)
+			error("msgrcv creation_machine rep msgid_fin_go");
 		puts("Piece fini d usiner est sur le convoyeur");
+		if (!(rep.nb_piece_restante - 1))//nb_recu par msgrcv(); ==> plus de pieces apres celle-ci donc FIN
+			break;
 	}
 	printf("Machine %d eteinte\n", info_thread->num_thread);
     return (NULL);

@@ -13,16 +13,16 @@ void			*fonc_thread_out(void *k)
     sigaction(SIGALRM, & action, NULL);
     if ((msgid_out = msgget(CLEF, IPC_CREAT | IPC_EXCL | 0600)) == -1)
 		error("msgget robot_out");
-    if (message.def_out)
-        ratio_defaut = 2;
-    else
-        ratio_defaut = 1;
 	puts("Robot out allume\n");
 	while (1)
 	{
         //ssize_t msgrcv(int msqid, void *msgp, size_t msgsz, long msgtyp, int msgflg);
         if (msgrcv(msgid_out, &message, sizeof(s_piece), 0, 0) == -1)
             error("msgrcv msgid_out");
+        if (piece.def_out)
+            ratio_defaut = 2;
+        else
+            ratio_defaut = 1;
         sem_post(sem_convoyeur);//piece n est plus sur le convoyeur
         if (sigsetjmp(contexte_sigalrm, 1) == 0)
         {

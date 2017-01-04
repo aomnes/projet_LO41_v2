@@ -70,7 +70,7 @@ typedef struct	s_piece
 typedef struct	s_msg_env_sup
 {
 	int			num_machine;
-	int			nb_piece_type;	//piece du type de la machine en comptant celle qui est envoyé
+	int			num_piece;//piece restante pour la machine en comptant celle qui est envoyé
 	s_piece		piece;
 }				s_msg_env_sup;
 
@@ -90,8 +90,9 @@ typedef struct	s_do_thr
 int msgid_in;
 int msgid_out;
 int msgid_machine;
+int msgid_cmpt_rendu_mach;
+int msgid_fin_go;
 int msgid_rbt_inst_table;
-int msgid_rbt_vers_table;
 
 void		error(char *msg);
 void 		gestionnaire_sigalrm(int inutilise);

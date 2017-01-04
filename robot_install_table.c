@@ -1,11 +1,11 @@
 #include "header.h"
 
-void			*fonc_thread_rbt_install(void *k)
+void                    *fonc_thread_rbt_install(void *k)
 {
-	(void)		*k;
-    struct sigaction action;
-    s_piece     message;
-    int         ratio_defaut;
+	(void)              *k;
+    struct sigaction    action;
+    s_msg_env_sup       message;
+    int                 ratio_defaut;
 
     action.sa_handler = gestionnaire_sigalrm;
     action.sa_flags = 0;
@@ -23,7 +23,7 @@ void			*fonc_thread_rbt_install(void *k)
 	while (1)
 	{
         //ssize_t msgrcv(int msqid, void *msgp, size_t msgsz, long msgtyp, int msgflg);
-        if (msgrcv(msgid_rbt_inst_table, &message, sizeof(s_piece), 0, 0) == -1)
+        if (msgrcv(msgid_rbt_inst_table, &message, sizeof(s_msg_env_sup), 0, 0) == -1)
             error("msgrcv msgid_rbt_inst_table");
         if (sigsetjmp(contexte_sigalrm, 1) == 0)
         {
@@ -31,8 +31,12 @@ void			*fonc_thread_rbt_install(void *k)
             alarm(50 * RATIO_TEMPS);//peut etre probleme car fonctionne avec sec...
             usleep((1000000 * 50 - 10000) * RATIO_TEMPS * ratio_defaut);
             alarm(0);
-            if (msgsnd(msgid_rbt_vers_table, &message, sizeof(s_piece), 0) == -1)
-                error("msgsnd msgid_rbt_vers_table");
+            //envoyer a tous les tread x nb_machine
+            for (int count = 0; 0 < nb_machine; i++)
+            {
+                if (msgsnd(msgid_machine, &message, sizeof(s_msg_env_sup), 0) == -1)
+                    error("msgsnd msgid_machine");
+            }
             sem_post(sem_convoyeur);//piece n est plus sur le convoyeur
             puts("Ok ! Piece sur la table\n");
         }

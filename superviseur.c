@@ -14,13 +14,19 @@ void superviseur(s_piece **piece)
 	int max_piece_type;
 	int i;
 	int j;
+	int somme;
 	s_msg_env_sup envoi;
 	s_msg_rcv_sup rep;
 
 	i = 0;
 	j = 0;
+	somme = 0;
 	if ((msgid_machine = msgget(CLEF, IPC_CREAT | IPC_EXCL | 0600)) == -1)
 		error("msgget msgid_machine");
+	if ((msgid_cmpt_rendu_mach = msgget(CLEF, IPC_CREAT | IPC_EXCL | 0600)) == -1)
+		error("msgget msgid_cmpt_rendu_mach");
+	if ((msgid_fin_go = msgget(CLEF, IPC_CREAT | IPC_EXCL | 0600)) == -1)
+		error("msgget msgid_fin_go");
 	nb_piece_sup = (int*)malloc(sizeof(int) * nb_machine);
 	if (!nb_piece_sup)
 		error("malloc nb_piece_sup superviseur");
@@ -51,23 +57,41 @@ void superviseur(s_piece **piece)
 			error("sem_open/init/machine");
 	}
 */
-	while (j <= max_piece_type)
-	{
 		while (i < nb_machine)
 		{
-			if (j < nb_piece_sup[i])
+			if (nb_piece_sup[i] != 0)
 			{
 				sem_post(sem_convoyeur);//attente du convoyeur libre
-				if (msgsnd(msgid_in, &piece[i][j], sizeof(s_piece), 0) == -1)
+				envoi.num_machine = i;
+				envoi.num_piece = j;
+				envoi.piece = piece[i][j];
+				if (msgsnd(msgid_in, &envoi, sizeof(s_msg_env_sup), 0) == -1)
 					error("msgsnd msgid_in sup.c");
 				sleep(1);
-				//msgsnd("machine retire");
-				sem_wait(sem_convoyeur);
-				puts("la piece est sur le convoyeur\n");
 			}
 			//else nothing
+			somme++;
 			i++;
+		}//toutes les machines son remplies de pieces en premier
+
+		while (somme != somme_piece_sup)
+		{
+			if (msgrcv(msgid_cmpt_rendu_mach, &message, sizeof(message), 0, 0) == -1)//recoit rapport
+				error("msgrcv msgid_cmpt_rendu_mach sup.c");
+			if (status == defaillance machine)
+			{
+				printf("Defaillance machine numero: %d\n", numero_machine);
+			}
+			else
+			{
+				if (msgsnd(msgid_fin_go, &message, sizeof(message), 0, 0) == -1)//ok va y
+					error("msgsnd msgid_fin_go sup.c");
+				if (msgsnd(msgid_out, &message, sizeof(message), 0, 0) == -1)//ok va y
+					error("msgsnd msgid_out sup.c");
+			sem_post(sem_convoyeur);//attente du convoyeur libre
+			if (msgsnd(msgid_in, &envoi, sizeof(s_msg_env_sup), 0) == -1)
+				error("msgsnd msgid_in sup.c");
+			//lui envoi une piece
+			}
 		}
-		j++;
-	}
 }
