@@ -41,7 +41,6 @@ int 		somme_piece_sup;
 int 		*nb_piece_sup;
 
 #define CONVOYER_VERIF 0 //nb pour les semaphores
-#define MACHINE_VERIF 1
 #define RATIO_TEMPS 0.02
 
 int		defaut; /* ==>
@@ -51,6 +50,10 @@ int		defaut; /* ==>
 3. defaut retire convoyeur pour table
 4. defaut duree de travail machine
 */
+
+/* Status Compte rendu */
+#define OK 1
+#define DEFAILLANCE 2
 
 int     lire_nombre_sp(void);
 int     lire_nombre_p(void);
