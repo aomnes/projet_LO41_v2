@@ -10,9 +10,11 @@ int			main(void)
 	puts("Bienvenue");
 	sleep(1);
 	//modification des signaux
+	puts("Combien voulez-vous de machines? (entrer autre chose que 0)");
+	nb_machine = lire_nombre_sp();
+	piece = creation_piece(nb_machine, piece);//création des pièces
 	creation_machine();//création des machines (threads)
 	sleep(3);//attente de la creation des machines
-	piece = creation_piece(nb_machine, piece);//création des pièces
 
 	creation_robot_install_table();
 	creation_robot_in();
