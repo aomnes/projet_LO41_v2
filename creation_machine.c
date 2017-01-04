@@ -7,6 +7,8 @@ void				*fonc_thread(void *k)
 {
 	s_do_thr		*info_thread;
 	s_info_trs  	rep;
+	s_cmpt_rendu	rep_cmpt_rendu;
+	int 			ratio_defaut;
 	int				valeur_out_msgrcv;
 
 	info_thread = (s_do_thr*)k;
@@ -31,16 +33,35 @@ void				*fonc_thread(void *k)
 			 if (errno != ENOMSG && valeur_out_msgrcv != 0)
 				error("msgrcv creation_machine vide file message #2");
 		} while (errno != ENOMSG);//vider file de message
-
-		sleep(1);
-		//msgsnd(...) compte rendu
-		if (msgsnd(msgid_cmpt_rendu_mach, &rep.piece, sizeof(s_cmpt_rendu), 0) == -1)
-			error("msgsnd msgid_cmpt_rendu_mach creation_machine.c");
-		if (msgrcv(msgid_fin_go, &rep, sizeof(s_info_trs), 0, 0) == -1)
-			error("msgrcv creation_machine rep msgid_fin_go");
-		puts("Piece fini d usiner est sur le convoyeur");
-		if (!(rep.nb_piece_restante - 1))//nb_recu par msgrcv(); ==> plus de pieces apres celle-ci donc FIN
-			break;
+		if (rep.piece.def_work_machine)
+            ratio_defaut = 2;
+        else
+            ratio_defaut = 1;
+		if (sigsetjmp(contexte_sigalrm, 1) == 0)
+		{
+			/* premier passage, installation */
+			alarm(50 * RATIO_TEMPS);//peut etre probleme car fonctionne avec sec...
+			usleep((1000000 * 50 - 10000) * RATIO_TEMPS * ratio_defaut);
+			alarm(0);
+			rep_cmpt_rendu.status = OK;
+			rep_cmpt_rendu.info_precedentes = rep;
+			if (msgsnd(msgid_cmpt_rendu_mach, &rep_cmpt_rendu, sizeof(s_cmpt_rendu), 0) == -1)
+				error("msgsnd msgid_cmpt_rendu_mach creation_machine.c");
+			if (msgrcv(msgid_fin_go, &rep, sizeof(s_info_trs), 0, 0) == -1)
+				error("msgrcv creation_machine rep msgid_fin_go");
+			puts("Piece fini d usiner est sur le convoyeur");
+			if (!(rep.num_piece - 1))//nb_recu par msgrcv(); ==> plus de pieces apres celle-ci donc FIN
+				break;
+		}
+		else
+		{
+			/* On est arrive par SIGALRM */
+			printf("\n==== Machine %d en defaillance! ====\n", rep.num_machine);
+			rep_cmpt_rendu.status = DEFAILLANCE;
+			rep_cmpt_rendu.info_precedentes = rep;
+			if (msgsnd(msgid_cmpt_rendu_mach, &rep_cmpt_rendu, sizeof(s_cmpt_rendu), 0) == -1)
+				error("msgsnd msgid_cmpt_rendu_mach creation_machine.c");
+		}
 	}
 	printf("Machine %d eteinte\n", info_thread->num_thread);
     return (NULL);
