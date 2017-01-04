@@ -10,14 +10,9 @@ void gestionnaire_sigalrm(int inutilise)
 void			        *fonc_thread_in(void *k)
 {
 	(void)		        *k;
-    struct sigaction    action;
     s_info_trs          message;
     int                 ratio_defaut;
 
-    action.sa_handler = gestionnaire_sigalrm;
-    action.sa_flags = 0;
-    sigfillset(&action.sa_mask);
-    sigaction(SIGALRM, &action, NULL);
     if ((msgid_in = msgget(CLEF, IPC_CREAT | IPC_EXCL | 0600)) == -1)
 		error("msgget Robot_in");
 	puts("Robot in allume\n");

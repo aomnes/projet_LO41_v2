@@ -3,14 +3,10 @@
 void		        	*fonc_thread_out(void *k)
 {
 	(void)	        	*k;
-    struct sigaction    action;
-    s_info_trs            message;
+    s_info_trs          message;
     int                 ratio_defaut;
 
-    action.sa_handler = gestionnaire_sigalrm;
-    action.sa_flags = 0;
-    sigfillset(& action.sa_mask);
-    sigaction(SIGALRM, & action, NULL);
+
     if ((msgid_out = msgget(CLEF, IPC_CREAT | IPC_EXCL | 0600)) == -1)
 		error("msgget robot_out");
 	puts("Robot out allume\n");
@@ -19,7 +15,7 @@ void		        	*fonc_thread_out(void *k)
         //ssize_t msgrcv(int msqid, void *msgp, size_t msgsz, long msgtyp, int msgflg);
         if (msgrcv(msgid_out, &message, sizeof(s_info_trs), 0, 0) == -1)
             error("msgrcv msgid_out");
-        if (message.def_out)
+        if (message.piece.def_out)
             ratio_defaut = 2;
         else
             ratio_defaut = 1;
