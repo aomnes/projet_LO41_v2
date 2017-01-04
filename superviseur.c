@@ -9,14 +9,14 @@
 //int sem_wait (sem_t * sem ) <== P(s) --
 //int sem_post (sem_t * sem ) <== V(s) ++
 
-void superviseur(s_piece **piece)
+void 				superviseur(s_piece **piece)
 {
-	int max_piece_type;
-	int i;
-	int j;
-	int somme;
-	s_info_trs envoi;
-	s_info_trs rep;
+	int 			max_piece_type;
+	int 			i;
+	int 			j;
+	int 			somme;
+	s_info_trs 		envoi;
+	s_cmpt_rendu 	compte_rendu;
 
 	i = 0;
 	j = 0;
@@ -76,21 +76,25 @@ void superviseur(s_piece **piece)
 
 		while (somme != somme_piece_sup)
 		{
-			if (msgrcv(msgid_cmpt_rendu_mach, &message, sizeof(s_cmpt_rendu), 0, 0) == -1)//recoit rapport
+			if (msgrcv(msgid_cmpt_rendu_mach, &compte_rendu, sizeof(s_cmpt_rendu), 0, 0) == -1)//recoit rapport
 				error("msgrcv msgid_cmpt_rendu_mach sup.c");
-			if (status == defaillance machine)
+			if (compte_rendu.status == DEFAILLANCE)
 			{
-				printf("Defaillance machine numero: %d\n", numero_machine);
+				printf("Defaillance machine numero: %d\n", compte_rendu.info_precedentes.num_machine);
 			}
 			else
 			{
-				if (msgsnd(msgid_fin_go, &message, sizeof(s_info_trs), 0, 0) == -1)//ok va y
+				if (msgsnd(msgid_fin_go, &compte_rendu.info_precedentes, sizeof(s_info_trs), 0) == -1)//ok va y
 					error("msgsnd msgid_fin_go sup.c");
-				if (msgsnd(msgid_out, &message, sizeof(s_info_trs), 0, 0) == -1)//ok va y
+				if (msgsnd(msgid_out, &compte_rendu.info_precedentes, sizeof(s_info_trs), 0) == -1)//ok va y
 					error("msgsnd msgid_out sup.c");
 			sem_post(sem_convoyeur);//attente du convoyeur libre
+			envoi.num_machine = compte_rendu.info_precedentes.num_machine;
+			envoi.num_piece = compte_rendu.info_precedentes.num_piece + 1;
+			envoi.piece = piece[compte_rendu.info_precedentes.num_machine][compte_rendu.info_precedentes.num_piece + 1];
 			if (msgsnd(msgid_in, &envoi, sizeof(s_info_trs), 0) == -1)
 				error("msgsnd msgid_in sup.c");
+			somme++;
 			//lui envoi une piece
 			}
 		}

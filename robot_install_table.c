@@ -13,16 +13,16 @@ void                    *fonc_thread_rbt_install(void *k)
     sigaction(SIGALRM, & action, NULL);
     if ((msgid_rbt_inst_table = msgget(CLEF, IPC_CREAT | IPC_EXCL | 0600)) == -1)
 		error("msgget msgid_rbt_inst_table");
-    if (message.def_retire_conv)
-        ratio_defaut = 2;
-    else
-        ratio_defaut = 1;
 	puts("Robot installe table allume\n");
 	while (1)
 	{
         //ssize_t msgrcv(int msqid, void *msgp, size_t msgsz, long msgtyp, int msgflg);
         if (msgrcv(msgid_rbt_inst_table, &message, sizeof(s_info_trs), 0, 0) == -1)
             error("msgrcv msgid_rbt_inst_table");
+        if (message.piece.def_retire_conv)
+            ratio_defaut = 2;
+        else
+            ratio_defaut = 1;
         if (sigsetjmp(contexte_sigalrm, 1) == 0)
         {
             /* premier passage, installation */
@@ -32,11 +32,12 @@ void                    *fonc_thread_rbt_install(void *k)
             //envoyer a tous les tread x nb_machine
             for (int count = 0; 0 < nb_machine; count++)
             {
+                /* Pas de changement des donnees dans le message */
                 if (msgsnd(msgid_machine, &message, sizeof(s_info_trs), 0) == -1)
                     error("msgsnd msgid_machine");
             }
             sem_post(sem_convoyeur);//piece n est plus sur le convoyeur
-            puts("Ok ! Piece sur la table\n");
+            printf("Ok ! Piece machine:[%d] piece:[%d]sur la table\n", message.num_machine, message.num_piece);
         }
         else
         {
