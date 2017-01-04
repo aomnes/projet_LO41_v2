@@ -64,6 +64,7 @@ void				*fonc_thread(void *k)
 		}
 	}
 	printf("Machine %d eteinte\n", info_thread->num_thread);
+	free(info_thread);
     return (NULL);
 }
 
@@ -81,7 +82,7 @@ void			creation_machine(void)
 	thread_id = (pthread_t*)malloc(sizeof(pthread_t) * nb_machine);//ne pas oublier de free(2) à la  et signal
 	if (!thread_id)
 		error("malloc thread_id creat_machine");
-
+	//msgrcv();
 	for(i = 0; i < nb_machine; i++)
 	{
 		info_thread = (s_do_thr*)malloc(sizeof(s_do_thr));//allouer une struct pour chaque thread et donc utilisation de pointeur car ils se suivent
@@ -95,5 +96,6 @@ void			creation_machine(void)
 			usleep(3000);
 		}
 	}
+	free(thread_id);
 	free(info_thread);
 }
