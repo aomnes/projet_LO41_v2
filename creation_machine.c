@@ -75,10 +75,6 @@ void			creation_machine(void)
 	int			i;
 	s_do_thr	*info_thread;
 
-	puts("Combien voulez-vous de machines? (entrer autre chose que 0)");
-
-	nb_machine = lire_nombre_sp();
-
 	thread_id = (pthread_t*)malloc(sizeof(pthread_t) * nb_machine);//ne pas oublier de free(2) à la  et signal
 	if (!thread_id)
 		error("malloc thread_id creat_machine");
