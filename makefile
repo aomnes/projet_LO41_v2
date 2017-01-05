@@ -8,16 +8,16 @@ OBJET = $(SRC:.c=.o)
 FLAGS = -Wall -Wextra
 LIB_THREAD = -pthread
 
-all: $(NAME)
 
-$(NAME):
-	gcc -c $(FLAGS) $(LIB_THREAD) $(SRC)
-	gcc -o $(NAME) $(OBJET)
+
+all:
+		gcc -c $(FLAGS) $(LIB_THREAD) $(SRC)
+		gcc -o $(NAME) $(OBJET)
 
 clean:
-	rm -rf $(OBJET)
+		rm -rf $(OBJET)
 
 fclean: clean
-	rm -rf $(NAME)
+		rm -rf $(NAME)
 
 re: fclean all
