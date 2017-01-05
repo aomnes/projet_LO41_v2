@@ -1,20 +1,23 @@
 NAME = usine.out
 CC = gcc
 INCLUDE = header.h
-SRCS = creation_convoyeur.c robot_in.c useful_function.c creation_machine.c\
-	main.c robot_out.c creation_piece.c superviseur.c robot_install_table.c
-CFLAGS = -Wall -Wextra -Werror
-COPTIONS = -o $(NAME) -I $(INCLUDE)
+SRC = robot_in.c useful_function.c creation_machine.c\
+      main.c robot_out.c creation_piece.c superviseur.c robot_install_table.c
+
+OBJET = $(SRC:.c=.o)
+FLAGS = -Wall -Wextra
+LIB_THREAD = -pthread
 
 all: $(NAME)
 
 $(NAME):
-	$(CC) $(CFLAGS) $(COPTIONS) $(SRCS)
+	gcc -c $(FLAGS) $(LIB_THREAD) $(SRC)
+	gcc -o $(NAME) $(OBJET)
 
 clean:
-	/bin/rm -f header.h.gch
+	rm -rf $(OBJET)
 
 fclean: clean
-	/bin/rm -f usine.out
+	rm -rf $(NAME)
 
-re: clean all
+re: fclean all
