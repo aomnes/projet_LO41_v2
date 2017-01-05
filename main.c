@@ -86,7 +86,6 @@ void 		fonction_sigkill(int signum)
 
 int			main(void)
 {
-//	pid_t	pid;
 	s_piece **piece;
 
 	piece = NULL;
