@@ -13,8 +13,7 @@ void				*fonc_thread(void *k)
 
 	info_thread = (s_do_thr*)k;
 	printf("Machine %d allumee\n", info_thread->num_thread);
-	//attendre la creation des pieces;
-	if (!nb_piece_sup[info_thread->num_thread])
+	if (!nb_piece[info_thread->num_thread])
 	{
 		puts("Machine %d eteinte car pas de piece");
 		return (NULL);//pas exit sinon extinction de toutes les machines et du processus entier
@@ -64,7 +63,6 @@ void				*fonc_thread(void *k)
 		}
 	}
 	printf("Machine %d eteinte\n", info_thread->num_thread);
-	free(info_thread);
     return (NULL);
 }
 
@@ -86,7 +84,7 @@ void			creation_machine(void)
 			error("malloc info_thread creat_machine");
 		info_thread->nb_machine = nb_machine;
 		info_thread->num_thread = i;
-		if((rc = pthread_create(&thread_id[i], 0, fonc_thread, (void *) info_thread)) != 0)
+		if((rc = pthread_create(&thread_id[i], 0, (void *(*)(void *))fonc_thread, (void *) info_thread)) != 0)
 		{
 			error("Creation de machine");
 			usleep(3000);

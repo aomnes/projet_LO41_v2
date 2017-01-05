@@ -37,6 +37,7 @@ sem_t 		*sem_machine;
 int 		nb_machine;
 int 		somme_piece_sup;
 int 		*nb_piece_sup;
+int			*nb_piece;
 
 #define CONVOYER_VERIF 0 //nb pour les semaphores
 #define RATIO_TEMPS 0.02
@@ -92,6 +93,7 @@ void 		gestionnaire_sigalrm(int inutilise);
 void 		creation_sem_msg(void);
 void 		fonction_sigint(int signum);
 void 		fonction_sigegv(int signum);
+void 		fonction_spr_sem_msg(void);
 
 int			lire_nombre_sp(void);
 int			lire_nombre_p(void);

@@ -2,7 +2,6 @@
 
 s_piece		**creation_piece(int nb_machine, s_piece **piece)
 {
-	int		*nb_piece;
 	int		i;
 	int		i_bis;
 	int		j;
@@ -45,6 +44,7 @@ s_piece		**creation_piece(int nb_machine, s_piece **piece)
 	{
 		puts("Vous n'avez cree aucune piece");
         printf("%s\n", "Exit...");
+		fonction_spr_sem_msg();
 		exit(0);
 	}
 
@@ -118,6 +118,5 @@ s_piece		**creation_piece(int nb_machine, s_piece **piece)
 	printf("========== Defaut sur la piece de type %d, numero %d ==========\n", defaut_machine, num_def_piece);
 	}
 	printf("\n\n=============== FIN DE LA CREATION DES PIECES ===============\n\n");
-	free(nb_piece);
 	return (piece);
 }
