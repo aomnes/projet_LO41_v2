@@ -29,7 +29,13 @@
 #include <sys/ipc.h>
 #include <sys/msg.h>
 
-key_t		CLEF;
+key_t		CLEF_1;
+key_t		CLEF_2;
+key_t		CLEF_3;
+key_t		CLEF_4;
+key_t		CLEF_5;
+key_t		CLEF_6;
+
 
 sigjmp_buf	contexte_sigalrm;
 

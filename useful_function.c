@@ -89,17 +89,23 @@ int trouver_max(int *tab, int nb_element)
 
 void creation_sem_msg(void)
 {
-	if ((msgid_machine = msgget(CLEF, IPC_CREAT | IPC_EXCL | 0600)) == -1)
-		error("msgget msgid_machine");
-	if ((msgid_cmpt_rendu_mach = msgget(CLEF, IPC_CREAT | IPC_EXCL | 0600)) == -1)
-		error("msgget msgid_cmpt_rendu_mach");
-	if ((msgid_fin_go = msgget(CLEF, IPC_CREAT | IPC_EXCL | 0600)) == -1)
-		error("msgget msgid_fin_go");
-	if ((msgid_rbt_inst_table = msgget(CLEF, IPC_CREAT | IPC_EXCL | 0600)) == -1)
-		error("msgget msgid_rbt_inst_table");
-	if ((msgid_in = msgget(CLEF, IPC_CREAT | IPC_EXCL | 0600)) == -1)
+	CLEF_1 = ftok("/msgid_in", 'A');
+	CLEF_2 = ftok("/msgid_rbt_inst_table", 'A');
+	CLEF_3 = ftok("/msgid_machine", 'A');
+	CLEF_4 = ftok("/msgid_cmpt_rendu_mach", 'A');
+	CLEF_5 = ftok("/msgid_fin_go", 'A');
+	CLEF_6 = ftok("/msgid_out", 'A');
+	if ((msgid_in = msgget(CLEF_1, IPC_CREAT | IPC_EXCL | 0600)) == -1)
 		error("msgget Robot_in");
-	if ((msgid_out = msgget(CLEF, IPC_CREAT | IPC_EXCL | 0600)) == -1)
+	if ((msgid_rbt_inst_table = msgget(CLEF_2, IPC_CREAT | IPC_EXCL | 0600)) == -1)
+		error("msgget msgid_rbt_inst_table");
+	if ((msgid_machine = msgget(CLEF_3, IPC_CREAT | IPC_EXCL | 0600)) == -1)
+		error("msgget msgid_machine");
+	if ((msgid_cmpt_rendu_mach = msgget(CLEF_4, IPC_CREAT | IPC_EXCL | 0600)) == -1)
+		error("msgget msgid_cmpt_rendu_mach");
+	if ((msgid_fin_go = msgget(CLEF_5, IPC_CREAT | IPC_EXCL | 0600)) == -1)
+		error("msgget msgid_fin_go");
+	if ((msgid_out = msgget(CLEF_6, IPC_CREAT | IPC_EXCL | 0600)) == -1)
 		error("msgget robot_out");
 	sem_convoyeur = sem_open("/sem_convoyeur", O_RDWR);
 	if (sem_convoyeur == SEM_FAILED)

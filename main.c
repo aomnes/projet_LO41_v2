@@ -27,7 +27,6 @@ int			main(void)
 	s_piece **piece;
 
 	piece = NULL;
-	CLEF = ftok("/cle_shm", 'A');
 	puts("Bienvenue");
 	sleep(1);
 	//modification des signaux
