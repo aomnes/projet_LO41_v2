@@ -166,19 +166,19 @@ void creation_sem_msg(void)
 		error("ftok CLEF_6");
 	free (chaine);
 
-	msgid_in = msgget(CLEF_1, IPC_CREAT | IPC_EXCL | 0600);
+	msgid_in = msgget(CLEF_1, IPC_CREAT | IPC_EXCL | 0660);
 	if (msgid_in == -1)
 		error("msgget Robot_in");
-	msgid_rbt_inst_table = msgget(CLEF_2, IPC_CREAT | IPC_EXCL | 0600);
+	msgid_rbt_inst_table = msgget(CLEF_2, IPC_CREAT | IPC_EXCL | 0660);
 	if (msgid_rbt_inst_table == -1)
 		error("msgget msgid_rbt_inst_table");
-	if ((msgid_machine = msgget(CLEF_3, IPC_CREAT | IPC_EXCL | 0600)) == -1)
+	if ((msgid_machine = msgget(CLEF_3, IPC_CREAT | IPC_EXCL | 0660)) == -1)
 		error("msgget msgid_machine");
-	if ((msgid_cmpt_rendu_mach = msgget(CLEF_4, IPC_CREAT | IPC_EXCL | 0600)) == -1)
+	if ((msgid_cmpt_rendu_mach = msgget(CLEF_4, IPC_CREAT | IPC_EXCL | 0660)) == -1)
 		error("msgget msgid_cmpt_rendu_mach");
-	if ((msgid_fin_go = msgget(CLEF_5, IPC_CREAT | IPC_EXCL | 0600)) == -1)
+	if ((msgid_fin_go = msgget(CLEF_5, IPC_CREAT | IPC_EXCL | 0660)) == -1)
 		error("msgget msgid_fin_go");
-	if ((msgid_out = msgget(CLEF_6, IPC_CREAT | IPC_EXCL | 0600)) == -1)
+	if ((msgid_out = msgget(CLEF_6, IPC_CREAT | IPC_EXCL | 0660)) == -1)
 		error("msgget robot_out");
 	sem_convoyeur = sem_open("/sem_convoyeur", O_RDWR);
 	if (sem_convoyeur == SEM_FAILED)
