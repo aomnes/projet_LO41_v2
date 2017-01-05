@@ -63,6 +63,27 @@ void 		fonction_sigegv(int signum)
 	raise(SIGSEGV);
 }
 
+void 		fonction_sigkill(int signum)
+{
+	(void)	signum;
+	signal(SIGKILL, SIG_DFL);
+	if (msgctl(msgid_in, IPC_RMID, NULL) == -1)
+		error("msgctl msgid_in");
+	if (msgctl(msgid_out, IPC_RMID, NULL) == -1)
+		error("msgctl msgid_out");
+	if (msgctl(msgid_machine, IPC_RMID, NULL) == -1)
+		error("msgctl msgid_machine");
+	if (msgctl(msgid_cmpt_rendu_mach, IPC_RMID, NULL) == -1)
+		error("msgctl msgid_cmpt_rendu_mach");
+	if (msgctl(msgid_fin_go, IPC_RMID, NULL) == -1)
+		error("msgctl msgid_fin_go");
+	if (msgctl(msgid_rbt_inst_table, IPC_RMID, NULL) == -1)
+		error("msgctl msgid_rbt_inst_table");
+	if (sem_unlink("/sem_convoyeur") == -1)
+		error("unlink_sem_convoyeur");
+	raise(SIGKILL);
+}
+
 int			main(void)
 {
 	pid_t	pid;
@@ -75,6 +96,7 @@ int			main(void)
 	signal(SIGSEGV, fonction_sigegv);
 	signal(SIGINT, fonction_sigint);
 	signal(SIGBUS, fonction_sigbus);
+	signal(SIGKILL, fonction_sigkill);
 	creation_sem_msg();
 	puts("Combien voulez-vous de machines? (entrer autre chose que 0)");
 	nb_machine = lire_nombre_sp();

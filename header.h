@@ -98,6 +98,7 @@ void		fonction_sigint(int signum);
 void		fonction_sigegv(int signum);
 void 		fonction_sigegv(int signum);
 void		fonction_spr_sem_msg(void);
+void 		fonction_sigkill(int signum);
 
 int			lire_nombre_sp(void);
 int			lire_nombre_p(void);
