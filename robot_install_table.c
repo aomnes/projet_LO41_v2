@@ -18,7 +18,7 @@ void				*fonc_thread_rbt_install(void *k)
 		if (msgrcv(msgid_rbt_inst_table, &message, sizeof(s_info_trs) - sizeof(long), 1, 0) == -1)
 			error("msgrcv msgid_rbt_inst_table");
 		sem_post(sem_convoyeur);//++
-		if (message.piece.def_retire_conv)
+		if (message.piece.def_retire_conv)		//si la piece est defectueuse, les temps de manipulation seront multipliés par deux
 			ratio_defaut = 2;
 		else
 			ratio_defaut = 1;
@@ -38,7 +38,7 @@ void				*fonc_thread_rbt_install(void *k)
 		{
 			/* On est arrive par SIGALRM */
 			puts("\n==== Systeme en état de défaillance Robot_intall_table! ====\n");
-			puts("10s...XD");
+			puts("10s...XD");	//la piece est defectueuse
 			sleep(10);
 			fonction_spr_sem_msg();
 			exit(EXIT_FAILURE);
@@ -55,7 +55,7 @@ void			creation_robot_install_table(void)
 	long		i;
 
 	i = 0;
-	if (pthread_create(&thread_id, 0, fonc_thread_rbt_install, (void*)i) != 0)
+	if (pthread_create(&thread_id, 0, fonc_thread_rbt_install, (void*)i) != 0)	//creation du thread du robot
 	{
 		error("Creation Robot installe table");
 		usleep(3000);
