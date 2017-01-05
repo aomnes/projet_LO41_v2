@@ -6,9 +6,6 @@ void		        	*fonc_thread_out(void *k)
     s_info_trs          message;
     int                 ratio_defaut;
 
-
-    if ((msgid_out = msgget(CLEF, IPC_CREAT | IPC_EXCL | 0600)) == -1)
-		error("msgget robot_out");
 	puts("Robot out allume\n");
 	while (1)
 	{

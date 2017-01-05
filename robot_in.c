@@ -13,8 +13,6 @@ void			        *fonc_thread_in(void *k)
     s_info_trs          message;
     int                 ratio_defaut;
 
-    if ((msgid_in = msgget(CLEF, IPC_CREAT | IPC_EXCL | 0600)) == -1)
-		error("msgget Robot_in");
 	puts("Robot in allume\n");
 	while (1)
 	{

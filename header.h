@@ -55,13 +55,6 @@ int		defaut; /* ==>
 #define OK 1
 #define DEFAILLANCE 2
 
-int     lire_nombre_sp(void);
-int     lire_nombre_p(void);
-int     lire_nombre_defaut(void);
-int     lire_numero_type_def(int nb_machine);
-int     lire_numero_piece(int nb_piece);
-int		trouver_max(int *tab, int nb_element);
-
 typedef struct	s_piece
 {
 	bool		def_in;
@@ -98,6 +91,15 @@ int msgid_out;
 
 void		error(char *msg);
 void 		gestionnaire_sigalrm(int inutilise);
+void 		creation_sem_msg(void);
+void 		fonction_sigint(int signum);
+
+int			lire_nombre_sp(void);
+int			lire_nombre_p(void);
+int			lire_nombre_defaut(void);
+int			lire_numero_type_def(int nb_machine);
+int			lire_numero_piece(int nb_piece);
+int			trouver_max(int *tab, int nb_element);
 
 void		superviseur(s_piece **piece);
 void		creation_robot_in(void);

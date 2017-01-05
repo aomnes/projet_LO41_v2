@@ -33,6 +33,7 @@ int			main(void)
 	//modification des signaux
 	sig_t signal(int sig, sig_t func);
 	signal(SIGINT, fonction_sigint);
+	creation_sem_msg();
 	puts("Combien voulez-vous de machines? (entrer autre chose que 0)");
 	nb_machine = lire_nombre_sp();
 	piece = creation_piece(nb_machine, piece);//création des pièces

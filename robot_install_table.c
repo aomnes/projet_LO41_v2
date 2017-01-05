@@ -11,8 +11,6 @@ void                    *fonc_thread_rbt_install(void *k)
     action.sa_flags = 0;
     sigfillset(& action.sa_mask);
     sigaction(SIGALRM, & action, NULL);
-    if ((msgid_rbt_inst_table = msgget(CLEF, IPC_CREAT | IPC_EXCL | 0600)) == -1)
-		error("msgget msgid_rbt_inst_table");
 	puts("Robot installe table allume\n");
 	while (1)
 	{
