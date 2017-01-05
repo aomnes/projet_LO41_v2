@@ -15,7 +15,7 @@ void				*fonc_thread_rbt_install(void *k)
 	while (1)
 	{
 		//ssize_t msgrcv(int msqid, void *msgp, size_t msgsz, long msgtyp, int msgflg);
-		if (msgrcv(msgid_rbt_inst_table, &message, sizeof(s_info_trs), 0, 0) == -1)
+		if (msgrcv(msgid_rbt_inst_table, &message, sizeof(s_info_trs) - sizeof(long), 1, 0) == -1)
 			error("msgrcv msgid_rbt_inst_table");
 		if (message.piece.def_retire_conv)
 			ratio_defaut = 2;
@@ -27,13 +27,10 @@ void				*fonc_thread_rbt_install(void *k)
 			alarm(50 * RATIO_TEMPS);//peut etre probleme car fonctionne avec sec...
 			usleep((1000000 * 50 - 10000) * RATIO_TEMPS * ratio_defaut);
 			alarm(0);
-			//envoyer a tous les thread x nb_machine
-			for (int count = 0; 0 < nb_machine; count++)
-			{
-				/* Pas de changement des donnees dans le message */
-				if (msgsnd(msgid_machine, &message, sizeof(s_info_trs), 0) == -1)
+			/* Pas de changement des donnees dans le message sauf le type */
+			message.type = message.num_machine + 10;
+			if (msgsnd(msgid_machine, &message, sizeof(s_info_trs) - sizeof(long), 0) == -1)
 				error("msgsnd msgid_machine");
-			}
 			sem_post(sem_convoyeur);//piece n est plus sur le convoyeur
 			printf("Ok ! Piece machine:[%d] piece:[%d]sur la table\n", message.num_machine, message.num_piece);
 		}

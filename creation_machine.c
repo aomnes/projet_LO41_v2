@@ -9,9 +9,6 @@ void				*fonc_thread(void *k)
 	s_info_trs		rep;
 	s_cmpt_rendu	rep_cmpt_rendu;
 	int 			ratio_defaut;
-	int				valeur_out_msgrcv;
-	s_info_trs
-	s_cmpt_rendu
 
 	info_thread = (s_do_thr*)k;
 	printf("Machine %d allumee\n", info_thread->num_thread);
@@ -22,18 +19,8 @@ void				*fonc_thread(void *k)
 	}
 	while (1)
 	{
-		do
-		{
-			if (msgrcv(msgid_machine, &rep, sizeof(s_info_trs), 0, 0) == -1)
-				error("msgrcv creation_machine rep #1");
-		} while (info_thread->num_thread != rep.num_machine);//si machine bonne (car plusieurs thread)
-		do
-		{
-			errno = 0;
-			valeur_out_msgrcv = msgrcv(msgid_machine, &rep, sizeof(s_info_trs), 0, IPC_NOWAIT);
-			 if (errno != ENOMSG && valeur_out_msgrcv != 0)
-				error("msgrcv creation_machine vide file message #2");
-		} while (errno != ENOMSG);//vider file de message
+		if (msgrcv(msgid_machine, &rep, sizeof(s_info_trs) - sizeof(long), info_thread->num_thread + 10, 0) == -1)
+			error("msgrcv creation_machine rep #1");
 		if (rep.piece.def_work_machine)
 			ratio_defaut = 2;
 		else
@@ -46,9 +33,10 @@ void				*fonc_thread(void *k)
 			alarm(0);
 			rep_cmpt_rendu.status = OK;
 			rep_cmpt_rendu.info_precedentes = rep;
-			if (msgsnd(msgid_cmpt_rendu_mach, &rep_cmpt_rendu, sizeof(s_cmpt_rendu), 0) == -1)
+			rep_cmpt_rendu.type = 3;
+			if (msgsnd(msgid_cmpt_rendu_mach, &rep_cmpt_rendu, sizeof(s_cmpt_rendu) - sizeof(long), 0) == -1)
 				error("msgsnd msgid_cmpt_rendu_mach creation_machine.c");
-			if (msgrcv(msgid_fin_go, &rep, sizeof(s_info_trs), 0, 0) == -1)
+			if (msgrcv(msgid_fin_go, &rep, sizeof(s_info_trs) - sizeof(long), 4, 0) == -1)
 				error("msgrcv creation_machine rep msgid_fin_go");
 			puts("Piece fini d usiner est sur le convoyeur");
 			if (!(rep.num_piece - 1))//nb_recu par msgrcv(); ==> plus de pieces apres celle-ci donc FIN
@@ -60,7 +48,8 @@ void				*fonc_thread(void *k)
 			printf("\n==== Machine %d en defaillance! ====\n", rep.num_machine);
 			rep_cmpt_rendu.status = DEFAILLANCE;
 			rep_cmpt_rendu.info_precedentes = rep;
-			if (msgsnd(msgid_cmpt_rendu_mach, &rep_cmpt_rendu, sizeof(s_cmpt_rendu), 0) == -1)
+			rep_cmpt_rendu.type = 3;
+			if (msgsnd(msgid_cmpt_rendu_mach, &rep_cmpt_rendu, sizeof(s_cmpt_rendu) - sizeof(long), 0) == -1)
 				error("msgsnd msgid_cmpt_rendu_mach creation_machine.c");
 		}
 	}

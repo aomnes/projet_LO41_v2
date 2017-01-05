@@ -10,7 +10,7 @@ void			*fonc_thread_out(void *k)
 	while (1)
 	{
 		//ssize_t msgrcv(int msqid, void *msgp, size_t msgsz, long msgtyp, int msgflg);
-		if (msgrcv(msgid_out, &message, sizeof(s_info_trs), 0, 0) == -1)
+		if (msgrcv(msgid_out, &message, sizeof(s_info_trs) - sizeof(long), 5, 0) == -1)
 			error("msgrcv msgid_out");
 		if (message.piece.def_out)
 			ratio_defaut = 2;

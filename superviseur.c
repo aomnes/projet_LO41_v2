@@ -23,11 +23,9 @@ void 				superviseur(s_piece **piece)
 	nb_piece_sup = (int*)malloc(sizeof(int) * nb_machine);
 	if (!nb_piece_sup)
 		error("malloc nb_piece_sup superviseur");
-
 	//remplissage nb_piece_sup
-	for (int count = 0; count < nb_machine; i++)
+	for (int count = 0; count < nb_machine; count++)
 			nb_piece_sup[count] = sizeof(piece[count])/sizeof(s_piece);
-
 	while (i < nb_machine)
 	{
 		if (nb_piece_sup[i] != 0)
@@ -36,8 +34,9 @@ void 				superviseur(s_piece **piece)
 			envoi.num_machine = i;
 			envoi.num_piece = j;
 			envoi.piece = piece[i][j];
-			if (msgsnd(msgid_in, &envoi, sizeof(s_info_trs), 0) == -1)
-				error("msgsnd msgid_in sup.c");
+			envoi.type = 50;
+			if (msgsnd(msgid_in, &envoi, sizeof(s_info_trs) - sizeof(long), 0) == -1)
+				error("msgsnd msgid_in sup.c #1");
 			sleep(1);
 		}
 		//else nothing
@@ -47,7 +46,7 @@ void 				superviseur(s_piece **piece)
 
 	while (somme != somme_piece_sup)
 	{
-		if (msgrcv(msgid_cmpt_rendu_mach, &compte_rendu, sizeof(s_cmpt_rendu), 0, 0) == -1)//recoit rapport
+		if (msgrcv(msgid_cmpt_rendu_mach, &compte_rendu, sizeof(s_cmpt_rendu) - sizeof(long), 3, 0) == -1)//recoit rapport
 			error("msgrcv msgid_cmpt_rendu_mach sup.c");
 		if (compte_rendu.status == DEFAILLANCE)
 		{
@@ -55,16 +54,19 @@ void 				superviseur(s_piece **piece)
 		}
 		else
 		{
-			if (msgsnd(msgid_fin_go, &compte_rendu.info_precedentes, sizeof(s_info_trs), 0) == -1)//ok va y
+			compte_rendu.type = 4;
+			if (msgsnd(msgid_fin_go, &compte_rendu.info_precedentes, sizeof(s_info_trs) - sizeof(long), 0) == -1)//ok va y
 				error("msgsnd msgid_fin_go sup.c");
-			if (msgsnd(msgid_out, &compte_rendu.info_precedentes, sizeof(s_info_trs), 0) == -1)//ok va y
+			compte_rendu.type = 5;
+			if (msgsnd(msgid_out, &compte_rendu.info_precedentes, sizeof(s_info_trs) - sizeof(long), 0) == -1)//ok va y
 				error("msgsnd msgid_out sup.c");
 		sem_post(sem_convoyeur);//attente du convoyeur libre
 		envoi.num_machine = compte_rendu.info_precedentes.num_machine;
 		envoi.num_piece = compte_rendu.info_precedentes.num_piece + 1;
 		envoi.piece = piece[compte_rendu.info_precedentes.num_machine][compte_rendu.info_precedentes.num_piece + 1];
-		if (msgsnd(msgid_in, &envoi, sizeof(s_info_trs), 0) == -1)
-			error("msgsnd msgid_in sup.c");
+		envoi.type = 50;
+		if (msgsnd(msgid_in, &envoi, sizeof(s_info_trs) - sizeof(long), 0) == -1)
+			error("msgsnd msgid_in sup.c #2");
 		somme++;
 		//lui envoi une piece
 		}

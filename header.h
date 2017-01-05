@@ -64,6 +64,7 @@ typedef struct	s_piece
 
 typedef struct	s_info_trs
 {
+	long		type;
 	int			num_machine;
 	int			num_piece;//piece restante pour la machine en comptant celle qui est envoyé
 	s_piece		piece;
@@ -71,12 +72,14 @@ typedef struct	s_info_trs
 
 typedef struct	s_cmpt_rendu
 {
+	long		type;
 	int			status;//1 piece fini --> 2 machine defaillance
 	s_info_trs 	info_precedentes;
 }				s_cmpt_rendu;
 
 typedef struct	s_do_thr
 {
+	long		type;
 	int			num_thread;
 	int			nb_machine;
 }				s_do_thr;
