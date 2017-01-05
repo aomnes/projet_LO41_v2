@@ -15,7 +15,7 @@ void				*fonc_thread(void *k)
 	printf("Machine %d allumee\n", info_thread->num_thread);
 	if (!nb_piece[info_thread->num_thread])
 	{
-		printf("Machine %d eteinte car pas de piece", info_thread->num_thread);
+		printf("Machine %d eteinte car pas de piece\n", info_thread->num_thread);
 		return (NULL);//pas exit sinon extinction de toutes les machines et du processus entier
 	}
 	while (1)
