@@ -34,11 +34,13 @@ void				*fonc_thread(void *k)
 			rep_cmpt_rendu.status = OK;
 			rep_cmpt_rendu.info_precedentes = rep;
 			rep_cmpt_rendu.type = 3;
+			printf("Piece [%d][%d] a fini d usiner... envoi du rapport\n", rep.num_machine, rep.num_piece);
 			if (msgsnd(msgid_cmpt_rendu_mach, &rep_cmpt_rendu, sizeof(s_cmpt_rendu) - sizeof(long), 0) == -1)
 				error("msgsnd msgid_cmpt_rendu_mach creation_machine.c");
 			if (msgrcv(msgid_fin_go, &rep, sizeof(s_info_trs) - sizeof(long), 4, 0) == -1)
 				error("msgrcv creation_machine rep msgid_fin_go");
-			puts("Piece fini d usiner est sur le convoyeur");
+			printf("Piece [%d][%d] va direction depot, elle est sur le convoyeur", rep.num_machine, rep.num_piece);
+			
 			if (!(rep.num_piece - 1))//nb_recu par msgrcv(); ==> plus de pieces apres celle-ci donc FIN
 				break;
 		}

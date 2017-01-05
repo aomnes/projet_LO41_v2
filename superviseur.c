@@ -51,6 +51,13 @@ void 				superviseur(s_piece **piece)
 		if (compte_rendu.status == DEFAILLANCE)
 		{
 			printf("Defaillance machine numero: %d\n", compte_rendu.info_precedentes.num_machine);
+			if (nb_piece_sup[compte_rendu.info_precedentes.num_machine] < compte_rendu.info_precedentes.num_piece)
+			{
+				printf("==== Systeme en état de défaillance du a la machine: %d! ====", compte_rendu.info_precedentes.num_machine);
+				sleep(10);
+				//fonction_spr_sem_msg();
+				exit(EXIT_FAILURE);
+			}
 		}
 		else
 		{
@@ -60,15 +67,15 @@ void 				superviseur(s_piece **piece)
 			compte_rendu.type = 5;
 			if (msgsnd(msgid_out, &compte_rendu.info_precedentes, sizeof(s_info_trs) - sizeof(long), 0) == -1)//ok va y
 				error("msgsnd msgid_out sup.c");
-		sem_post(sem_convoyeur);//attente du convoyeur libre
-		envoi.num_machine = compte_rendu.info_precedentes.num_machine;
-		envoi.num_piece = compte_rendu.info_precedentes.num_piece + 1;
-		envoi.piece = piece[compte_rendu.info_precedentes.num_machine][compte_rendu.info_precedentes.num_piece + 1];
-		envoi.type = 50;
-		if (msgsnd(msgid_in, &envoi, sizeof(s_info_trs) - sizeof(long), 0) == -1)
-			error("msgsnd msgid_in sup.c #2");
-		somme++;
-		//lui envoi une piece
+			sem_wait(sem_convoyeur);//attente du convoyeur libre puis la prend
+			envoi.num_machine = compte_rendu.info_precedentes.num_machine;
+			envoi.num_piece = compte_rendu.info_precedentes.num_piece + 1;
+			envoi.piece = piece[compte_rendu.info_precedentes.num_machine][compte_rendu.info_precedentes.num_piece + 1];
+			envoi.type = 50;
+			if (msgsnd(msgid_in, &envoi, sizeof(s_info_trs) - sizeof(long), 0) == -1)
+				error("msgsnd msgid_in sup.c #2");
+			somme++;
+			//lui envoi une piece
 		}
 	}
 }
