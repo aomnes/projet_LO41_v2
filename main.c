@@ -35,6 +35,8 @@ int			main(void)
 		default:
 			printf("J'ai lancé le superviseur\n");
 			wait(NULL);
+			free(piece);
+			free(nb_piece_sup);
 			/*if (sem_unlink("/sem_convoyeur") == -1)
 				error("unlink_sem_convoyeur");//
 			if (sem_unlink("/sem_machine") == -1)
