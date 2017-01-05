@@ -28,8 +28,9 @@ void				*fonc_thread(void *k)
 		if (sigsetjmp(contexte_sigalrm, 1) == 0)
 		{
 			/* premier passage, installation */
-			alarm(50 * RATIO_TEMPS);//peut etre probleme car fonctionne avec sec...
-			usleep((1000000 * 100 - 10000) * RATIO_TEMPS * ratio_defaut);
+			printf("Usinage en cours, machine[%d]\n", info_thread->num_thread);
+			alarm(10000 * RATIO_TEMPS);//peut etre probleme car fonctionne avec sec...
+			usleep((1000000 * 4000) * RATIO_TEMPS * ratio_defaut);
 			alarm(0);
 			rep_cmpt_rendu.status = OK;
 			rep_cmpt_rendu.info_precedentes = rep;

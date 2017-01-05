@@ -37,13 +37,12 @@ void 				*superviseur(s_piece **piece)
 			envoi.type = 50;
 			if (msgsnd(msgid_in, &envoi, sizeof(s_info_trs) - sizeof(long), 0) == -1)
 				error("msgsnd msgid_in sup.c #1");
-			sleep(1);
+			sleep(4);
 		}
 		//else nothing
 		somme++;
 		i++;
 	}//toutes les machines son remplies de pieces en premier
-
 	while (somme != somme_piece_sup)
 	{
 		if (msgrcv(msgid_cmpt_rendu_mach, &compte_rendu, sizeof(s_cmpt_rendu) - sizeof(long), 3, 0) == -1)//recoit rapport
@@ -54,6 +53,7 @@ void 				*superviseur(s_piece **piece)
 			if (nb_piece_sup[compte_rendu.info_precedentes.num_machine] < compte_rendu.info_precedentes.num_piece)
 			{
 				printf("==== Systeme en état de défaillance du a la machine: %d! ====", compte_rendu.info_precedentes.num_machine);
+				puts("10s...");
 				sleep(10);
 				fonction_spr_sem_msg();
 				exit(EXIT_FAILURE);
