@@ -30,7 +30,7 @@ void 				superviseur(s_piece **piece)
 	{
 		if (nb_piece_sup[i] != 0)
 		{
-			sem_post(sem_convoyeur);//attente du convoyeur libre
+			sem_wait(sem_convoyeur);//attente du convoyeur libre
 			envoi.num_machine = i;
 			envoi.num_piece = j;
 			envoi.piece = piece[i][j];

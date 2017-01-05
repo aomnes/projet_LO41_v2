@@ -17,6 +17,7 @@ void				*fonc_thread_rbt_install(void *k)
 		//ssize_t msgrcv(int msqid, void *msgp, size_t msgsz, long msgtyp, int msgflg);
 		if (msgrcv(msgid_rbt_inst_table, &message, sizeof(s_info_trs) - sizeof(long), 1, 0) == -1)
 			error("msgrcv msgid_rbt_inst_table");
+		sem_post(sem_convoyeur);//++
 		if (message.piece.def_retire_conv)
 			ratio_defaut = 2;
 		else
@@ -38,6 +39,8 @@ void				*fonc_thread_rbt_install(void *k)
 		{
 			/* On est arrive par SIGALRM */
 			puts("\n==== Systeme en état de défaillance Robot_intall_table! ====\n");
+			sleep(10);
+			//fonction_spr_sem_msg();
 			exit(EXIT_FAILURE);
 		}
 	}

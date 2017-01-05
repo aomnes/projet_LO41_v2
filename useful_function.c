@@ -204,7 +204,7 @@ void			creation_sem_msg(void)
 	{
 		if (errno != ENOENT)
 			error("sem_open/init/convoyeur");
-		sem_convoyeur = sem_open("/sem_convoyeur" , O_CREAT, 0666, 0);
+		sem_convoyeur = sem_open("/sem_convoyeur" , O_CREAT, 0666, 1);
 		//le 0 correction a l initialisation du 0 (qui change avec P et V)
 		if (sem_convoyeur == SEM_FAILED)
 			error("sem_open/init/convoyeur");

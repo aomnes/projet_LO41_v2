@@ -16,7 +16,7 @@ void			*fonc_thread_out(void *k)
 			ratio_defaut = 2;
 		else
 			ratio_defaut = 1;
-		sem_post(sem_convoyeur);//piece n est plus sur le convoyeur
+		sem_post(sem_convoyeur);//capteur allume, piece n est plus sur le convoyeur
 		if (sigsetjmp(contexte_sigalrm, 1) == 0)
 		{
 			/* premier passage, installation */
@@ -29,6 +29,8 @@ void			*fonc_thread_out(void *k)
 		{
 			/* On est arrive par SIGALRM */
 			puts("\n==== Systeme en état de défaillance Robot_out! ====\n");
+			sleep(10);
+			//fonction_spr_sem_msg();
 			exit(EXIT_FAILURE);
 		}
 	}

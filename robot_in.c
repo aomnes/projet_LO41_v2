@@ -34,12 +34,13 @@ void			*fonc_thread_in(void *k)
 			message.type = 1;
 			if (msgsnd(msgid_rbt_inst_table, &message, sizeof(s_info_trs) - sizeof(long), 0) == -1)
 				error("msgsnd msgid_in -> msgid_rbt_inst_table");
-			sem_wait(sem_convoyeur);//piece est sur le convoyeur
 		}
 		else
 		{
 			/* On est arrive par SIGALRM */
 			puts("\n==== Systeme en état de défaillance Robot_in! ====\n");
+			sleep(10);
+			//fonction_spr_sem_msg();
 			exit(EXIT_FAILURE);
 		}
 	}
