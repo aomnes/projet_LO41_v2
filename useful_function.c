@@ -89,15 +89,88 @@ int trouver_max(int *tab, int nb_element)
 
 void creation_sem_msg(void)
 {
-	CLEF_1 = ftok("/msgid_in", 'A');
-	CLEF_2 = ftok("/msgid_rbt_inst_table", 'A');
-	CLEF_3 = ftok("/msgid_machine", 'A');
-	CLEF_4 = ftok("/msgid_cmpt_rendu_mach", 'A');
-	CLEF_5 = ftok("/msgid_fin_go", 'A');
-	CLEF_6 = ftok("/msgid_out", 'A');
-	if ((msgid_in = msgget(CLEF_1, IPC_CREAT | IPC_EXCL | 0600)) == -1)
+	key_t		CLEF_1;
+	key_t		CLEF_2;
+	key_t		CLEF_3;
+	key_t		CLEF_4;
+	key_t		CLEF_5;
+	key_t		CLEF_6;
+	char 		*chaine;
+	int			len_PWD;
+	int 		len_fichier;
+
+	len_PWD = strlen(getenv("PWD"));
+	len_fichier = strlen("/robot_in.c");
+	chaine = (char*)malloc(sizeof(char) * (len_PWD + len_fichier + 1));
+	if (!chaine)
+		error("malloc chaine 1 PWD");
+	chaine[len_PWD + len_fichier] = '\0';
+	sprintf(chaine , "%s/robot_in.c", getenv("PWD"));
+	CLEF_1 = ftok(chaine, 'A');
+	if (CLEF_1 == -1)
+		error("ftok CLEF_1");
+	free(chaine);
+
+	len_fichier = strlen("/robot_install_table.c");
+	chaine = (char*)malloc(sizeof(char) * (len_PWD + len_fichier + 1));
+	if (!chaine)
+		error("malloc chaine 2 PWD");
+	chaine[len_PWD + len_fichier] = '\0';
+	sprintf(chaine , "%s/robot_install_table.c", getenv("PWD"));
+	CLEF_2 = ftok(chaine, 'B');
+	if (CLEF_1 == -1)
+		error("ftok CLEF_2");
+	free(chaine);
+
+	len_fichier = strlen("/creation_machine.c");
+	chaine = (char*)malloc(sizeof(char) * (len_PWD + len_fichier + 1));
+	if (!chaine)
+		error("malloc chaine 3 PWD");
+	chaine[len_PWD + len_fichier] = '\0';
+	sprintf(chaine , "%s/creation_machine.c", getenv("PWD"));
+	CLEF_3 = ftok(chaine, 'C');
+	if (CLEF_1 == -1)
+		error("ftok CLEF_3");
+	free(chaine);
+
+	len_fichier = strlen("/superviseur.c");
+	chaine = (char*)malloc(sizeof(char) * (len_PWD + len_fichier + 1));
+	if (!chaine)
+		error("malloc chaine 4 PWD");
+	chaine[len_PWD + len_fichier] = '\0';
+	sprintf(chaine , "%s/superviseur.c", getenv("PWD"));
+	CLEF_4 = ftok(chaine, 'D');
+	if (CLEF_1 == -1)
+		error("ftok CLEF_4");
+	free (chaine);
+
+	len_fichier = strlen("/useful_function.c");
+	chaine = (char*)malloc(sizeof(char) * (len_PWD + len_fichier + 1));
+	if (!chaine)
+		error("malloc chaine 5 PWD");
+	chaine[len_PWD + len_fichier] = '\0';
+	sprintf(chaine , "%s/useful_function.c", getenv("PWD"));
+	CLEF_5 = ftok(chaine, 'E');
+	if (CLEF_1 == -1)
+		error("ftok CLEF_5");
+	free (chaine);
+
+	len_fichier = strlen("/robot_out.c");
+	chaine = (char*)malloc(sizeof(char) * (len_PWD + len_fichier + 1));
+	if (!chaine)
+		error("malloc chaine 6 PWD");
+	chaine[len_PWD + len_fichier] = '\0';
+	sprintf(chaine , "%s/robot_out.c", getenv("PWD"));
+	CLEF_6 = ftok(chaine, 'F');
+	if (CLEF_1 == -1)
+		error("ftok CLEF_6");
+	free (chaine);
+
+	msgid_in = msgget(CLEF_1, IPC_CREAT | IPC_EXCL | 0600);
+	if (msgid_in == -1)
 		error("msgget Robot_in");
-	if ((msgid_rbt_inst_table = msgget(CLEF_2, IPC_CREAT | IPC_EXCL | 0600)) == -1)
+	msgid_rbt_inst_table = msgget(CLEF_2, IPC_CREAT | IPC_EXCL | 0600);
+	if (msgid_rbt_inst_table == -1)
 		error("msgget msgid_rbt_inst_table");
 	if ((msgid_machine = msgget(CLEF_3, IPC_CREAT | IPC_EXCL | 0600)) == -1)
 		error("msgget msgid_machine");

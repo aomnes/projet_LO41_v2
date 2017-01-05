@@ -43,7 +43,6 @@ int			main(void)
 	creation_robot_in();
 	creation_robot_out();
 
-	creation_convoyeur();//création du creation_convoyeur()
 	//ne pas oublier d ajouter le signal() dans pour suprimer les ipcs
 	pid = fork();//création du processus superviseur
 	switch(pid)
