@@ -24,7 +24,7 @@ s_piece		**creation_piece(int nb_machine, s_piece **piece)
 	piece = (s_piece**)malloc(sizeof(piece) * nb_machine);		//ajouter le free(2) dans le signal
 	if (!piece)
 		error("malloc creation tableau piece");
-    while (nb_type_piece)
+    while (nb_type_piece)		//on cree un certain nombre de piece d'un certain type pour une machine
     {
         printf("Ici, nous allons créer les pièces à usiner.\nPour la machine %d Combien en voulez-vous ?\n", nb_type_piece - 1);
         nb_piece[nb_type_piece - 1] = lire_nombre_p();
@@ -53,14 +53,14 @@ s_piece		**creation_piece(int nb_machine, s_piece **piece)
 			error("malloc creation tableau piece[index]");
 		index++;
 	}
-	puts("Dans ce test y aura-t-il des erreurs?\n\
-			0. non\n\
-			1. defaut robot entre\n\
+	puts("Dans ce test y aura-t-il des erreurs?\n\		
+			0. non\n\				//on demande si il y aura des erreurs et si oui, quel type
+			1. defaut robot entre\n\ 
 			2. defaut robot sortie\n\
 			3. defaut retire convoyeur pour table\n\
 			4. defaut duree de travail machine");
 	defaut = lire_nombre_defaut();
-	while (i < nb_machine)//init defaut 0
+	while (i < nb_machine)//init defaut 0		on initialise les pieces comme n'ayant aucun défaut
 	{
 		while (i_bis < nb_piece[i])
 		{
@@ -89,7 +89,7 @@ s_piece		**creation_piece(int nb_machine, s_piece **piece)
 	}
 	*/
 	printf("Voilà, nous avons créé les pieces!");
-	if (defaut)
+	if (defaut)		//si il y a des defauts, on les mets en place
 	{
 		puts("\nInstallation du defaut:");
 		puts("Rentrer un numero de type de piece:");
