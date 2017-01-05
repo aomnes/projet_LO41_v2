@@ -21,6 +21,27 @@ void 		fonction_sigint(int signum)
 	raise(SIGINT);
 }
 
+void 		fonction_sigegv(int signum)
+{
+	(void)	signum;
+	if (msgctl(msgid_in, IPC_RMID, NULL) == -1)
+		error("msgctl msgid_in");
+	if (msgctl(msgid_out, IPC_RMID, NULL) == -1)
+		error("msgctl msgid_out");
+	if (msgctl(msgid_machine, IPC_RMID, NULL) == -1)
+		error("msgctl msgid_machine");
+	if (msgctl(msgid_cmpt_rendu_mach, IPC_RMID, NULL) == -1)
+		error("msgctl msgid_cmpt_rendu_mach");
+	if (msgctl(msgid_fin_go, IPC_RMID, NULL) == -1)
+		error("msgctl msgid_fin_go");
+	if (msgctl(msgid_rbt_inst_table, IPC_RMID, NULL) == -1)
+		error("msgctl msgid_rbt_inst_table");
+	if (sem_unlink("/sem_convoyeur") == -1)
+		error("unlink_sem_convoyeur");
+	signal(SIGSEGV, SIG_DFL);
+	raise(SIGSEGV);
+}
+
 int			main(void)
 {
 	pid_t	pid;
@@ -30,7 +51,7 @@ int			main(void)
 	puts("Bienvenue");
 	sleep(1);
 	//modification des signaux
-	sig_t signal(int sig, sig_t func);
+	signal(SIGSEGV, fonction_sigegv);
 	signal(SIGINT, fonction_sigint);
 	creation_sem_msg();
 	puts("Combien voulez-vous de machines? (entrer autre chose que 0)");

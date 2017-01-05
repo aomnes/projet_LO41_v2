@@ -91,6 +91,7 @@ void		error(char *msg);
 void 		gestionnaire_sigalrm(int inutilise);
 void 		creation_sem_msg(void);
 void 		fonction_sigint(int signum);
+void 		fonction_sigegv(int signum);
 
 int			lire_nombre_sp(void);
 int			lire_nombre_p(void);
