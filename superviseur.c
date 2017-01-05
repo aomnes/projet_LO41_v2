@@ -14,8 +14,8 @@ void 				superviseur(s_piece **piece)
 	int 			i;
 	int 			j;
 	int 			somme;
-	s_info_trs 		envoi;
-	s_cmpt_rendu 	compte_rendu;
+	s_info_trs		envoi;
+	s_cmpt_rendu	compte_rendu;
 
 	i = 0;
 	j = 0;

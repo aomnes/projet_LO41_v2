@@ -5,22 +5,22 @@ s_piece		**creation_piece(int nb_machine, s_piece **piece)
 	int		i;
 	int		i_bis;
 	int		index;
-    int     nb_type_piece;
-    int     nb_type_piece2;
-    int     somme_piece;
+	int		nb_type_piece;
+	int		nb_type_piece2;
+	int		somme_piece;
 	int		num_def_piece;
 	int 	defaut_machine;
 
-    nb_type_piece = nb_machine;
-    nb_type_piece2 = nb_machine;
-    somme_piece = 0;
-    i = 0;
+	nb_type_piece = nb_machine;
+	nb_type_piece2 = nb_machine;
+	somme_piece = 0;
+	i = 0;
 	i_bis = 0;
 	index = 0;
 
-    nb_piece = (int*)malloc(sizeof(int) * nb_machine);
-    if (!nb_piece)
-        error("malloc nb_piece");
+	nb_piece = (int*)malloc(sizeof(int) * nb_machine);
+	if (!nb_piece)
+		error("malloc nb_piece");
 	piece = (s_piece**)malloc(sizeof(piece) * nb_machine);		//ajouter le free(2) dans le signal
 	if (!piece)
 		error("malloc creation tableau piece");
@@ -41,7 +41,7 @@ s_piece		**creation_piece(int nb_machine, s_piece **piece)
 	if (!somme_piece)
 	{
 		puts("Vous n'avez cree aucune piece");
-        printf("%s\n", "Exit...");
+		printf("%s\n", "Exit...");
 		fonction_spr_sem_msg();
 		exit(0);
 	}
@@ -54,20 +54,20 @@ s_piece		**creation_piece(int nb_machine, s_piece **piece)
 		index++;
 	}
 	puts("Dans ce test y aura-t-il des erreurs?\n\
-            0. non\n\
-            1. defaut robot entre\n\
-            2. defaut robot sortie\n\
-            3. defaut retire convoyeur pour table\n\
-            4. defaut duree de travail machine");
+			0. non\n\
+			1. defaut robot entre\n\
+			2. defaut robot sortie\n\
+			3. defaut retire convoyeur pour table\n\
+			4. defaut duree de travail machine");
 	defaut = lire_nombre_defaut();
 	while (i < nb_machine)//init defaut 0
 	{
 		while (i_bis < nb_piece[i])
 		{
-		    piece[i][i_bis].def_in = false;
-		    piece[i][i_bis].def_out = false;
-		    piece[i][i_bis].def_retire_conv = false;
-		    piece[i][i_bis].def_work_machine = false;
+			piece[i][i_bis].def_in = false;
+			piece[i][i_bis].def_out = false;
+			piece[i][i_bis].def_retire_conv = false;
+			piece[i][i_bis].def_work_machine = false;
 			i_bis++;
 		}
 		i++;

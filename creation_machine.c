@@ -6,10 +6,12 @@
 void				*fonc_thread(void *k)
 {
 	s_do_thr		*info_thread;
-	s_info_trs  	rep;
+	s_info_trs		rep;
 	s_cmpt_rendu	rep_cmpt_rendu;
 	int 			ratio_defaut;
 	int				valeur_out_msgrcv;
+	s_info_trs
+	s_cmpt_rendu
 
 	info_thread = (s_do_thr*)k;
 	printf("Machine %d allumee\n", info_thread->num_thread);
@@ -33,9 +35,9 @@ void				*fonc_thread(void *k)
 				error("msgrcv creation_machine vide file message #2");
 		} while (errno != ENOMSG);//vider file de message
 		if (rep.piece.def_work_machine)
-            ratio_defaut = 2;
-        else
-            ratio_defaut = 1;
+			ratio_defaut = 2;
+		else
+			ratio_defaut = 1;
 		if (sigsetjmp(contexte_sigalrm, 1) == 0)
 		{
 			/* premier passage, installation */
@@ -63,7 +65,7 @@ void				*fonc_thread(void *k)
 		}
 	}
 	printf("Machine %d eteinte\n", info_thread->num_thread);
-    return (NULL);
+	return (NULL);
 }
 
 void			creation_machine(void)

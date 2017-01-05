@@ -1,93 +1,93 @@
 #include "header.h"
 
-void		error(char *msg)
+void			error(char *msg)
 {
 	perror(msg);
 	exit(0);
 }
 
-int     lire_nombre_sp(void)
+int				lire_nombre_sp(void)
 {
-    int d;
-    int c;
+	int 		d;
+	int 		c;
 
-    do
-    {
-        scanf("%d", &d);
-        while ((c = getchar ()) != '\n' && c != EOF);
-    } while(d <= 0);
-    return (d);
+	do
+	{
+		scanf("%d", &d);
+		while ((c = getchar ()) != '\n' && c != EOF);
+	} while (d <= 0);
+	return (d);
 }
 
-int     lire_nombre_p(void)
+int				lire_nombre_p(void)
 {
-    int d;
-    int c;
+	int			d;
+	int			c;
 
-    do
-    {
-        scanf("%d", &d);
-        while ((c = getchar ()) != '\n' && c != EOF);
-    } while(d < 0);
-    return (d);
+	do
+	{
+		scanf("%d", &d);
+		while ((c = getchar ()) != '\n' && c != EOF);
+	} while (d < 0);
+	return (d);
 }
 
-int     lire_nombre_defaut(void)
+int				lire_nombre_defaut(void)
 {
-    int d;
-    int c;
+	int			d;
+	int			c;
 
-    do
-    {
-        scanf("%d", &d);
-        while ((c = getchar ()) != '\n' && c != EOF);
-    } while(d < 0 || d > 4);
-    return (d);
+	do
+	{
+		scanf("%d", &d);
+		while ((c = getchar ()) != '\n' && c != EOF);
+	} while (d < 0 || d > 4);
+	return (d);
 }
 
-int     lire_numero_type_def(int nb_machine)
+int				lire_numero_type_def(int nb_machine)
 {
-    int d;
-    int c;
+	int			d;
+	int			c;
 
-    do
-    {
-        scanf("%d", &d);
-        while ((c = getchar ()) != '\n' && c != EOF);
-    } while(d < 0 || d > nb_machine - 1);
-    return (d);
+	do
+	{
+		scanf("%d", &d);
+		while ((c = getchar ()) != '\n' && c != EOF);
+	} while (d < 0 || d > nb_machine - 1);
+	return (d);
 }
 
-int     lire_numero_piece(int nb_piece)
+int				lire_numero_piece(int nb_piece)
 {
-    int d;
-    int c;
+	int			d;
+	int			c;
 
-    do
-    {
-        scanf("%d", &d);
-        while ((c = getchar ()) != '\n' && c != EOF);
-    } while(d < 0 || d > nb_piece - 1);
-    return (d);
+	do
+	{
+		scanf("%d", &d);
+		while ((c = getchar ()) != '\n' && c != EOF);
+	} while (d < 0 || d > nb_piece - 1);
+	return (d);
 }
 
-int trouver_max(int *tab, int nb_element)
+int				trouver_max(int *tab, int nb_element)
 {
-	int max;
-	int index;
+	int			max;
+	int			index;
 
 	max = tab[0];
 	index = 1;
 	while (index < nb_element)
 	{
 		if (max >= tab[index])
-			max = tab[index];
+		max = tab[index];
 		index++;
 	}
 	return (max);
 }
 
-void creation_sem_msg(void)
+void			creation_sem_msg(void)
 {
 	key_t		CLEF_1;
 	key_t		CLEF_2;
@@ -95,9 +95,9 @@ void creation_sem_msg(void)
 	key_t		CLEF_4;
 	key_t		CLEF_5;
 	key_t		CLEF_6;
-	char 		*chaine;
+	char		*chaine;
 	int			len_PWD;
-	int 		len_fichier;
+	int			len_fichier;
 
 	len_PWD = strlen(getenv("PWD"));
 	len_fichier = strlen("/robot_in.c");
@@ -204,7 +204,7 @@ void creation_sem_msg(void)
 	*/
 }
 
-void fonction_spr_sem_msg(void)
+void			fonction_spr_sem_msg(void)
 {
 	if (msgctl(msgid_in, IPC_RMID, NULL) == -1)
 		error("msgctl msgid_in");
