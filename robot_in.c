@@ -38,7 +38,7 @@ void			*fonc_thread_in(void *k)
 		else
 		{
 			/* On est arrive par SIGALRM */
-			puts("\n==== Systeme en état de défaillance Robot_in! ====\n");
+			puts("\n==== Systeme en état de défaillance Robot_in! ====\n");	//si il y a une defaillance, on envoie un message différent
 			puts("10s...");
 			sleep(10);
 			fonction_spr_sem_msg();
@@ -56,7 +56,7 @@ void			creation_robot_in(void)
 	long		i;
 
 	i = 0;
-	if (pthread_create(&thread_id, 0, fonc_thread_in, (void*)i) != 0)
+	if (pthread_create(&thread_id, 0, fonc_thread_in, (void*)i) != 0)	//creation du thread du robot_in
 	{
 		error("Creation du robot in");
 		usleep(3000);
