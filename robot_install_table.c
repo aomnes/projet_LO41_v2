@@ -11,7 +11,7 @@ void                    *fonc_thread_rbt_install(void *k)
     action.sa_flags = 0;
     sigfillset(& action.sa_mask);
     sigaction(SIGALRM, & action, NULL);
-	puts("\nRobot installe table allume\n");
+	puts("\nRobot installe table allume");
 	while (1)
 	{
         //ssize_t msgrcv(int msqid, void *msgp, size_t msgsz, long msgtyp, int msgflg);

@@ -13,7 +13,7 @@ void			        *fonc_thread_in(void *k)
     s_info_trs          message;
     int                 ratio_defaut;
 
-	puts("Robot in allume\n");
+	puts("Robot in allume");
 	while (1)
 	{
         //ssize_t msgrcv(int msqid, void *msgp, size_t msgsz, long msgtyp, int msgflg);
