@@ -12,7 +12,7 @@ void			*fonc_thread_out(void *k)
 		//ssize_t msgrcv(int msqid, void *msgp, size_t msgsz, long msgtyp, int msgflg);
 		if (msgrcv(msgid_out, &message, sizeof(s_info_trs) - sizeof(long), 5, 0) == -1)
 			error("msgrcv msgid_out");
-		if (message.piece.def_out)
+		if (message.piece.def_out)	//si la piece est défectueuse
 			ratio_defaut = 2;
 		else
 			ratio_defaut = 1;
@@ -25,7 +25,7 @@ void			*fonc_thread_out(void *k)
 			alarm(0);
 			puts("Ok ! Piece sur dans le depot\n");
 		}
-		else
+		else	//si la piece est defectueuse
 		{
 			/* On est arrive par SIGALRM */
 			puts("\n==== Systeme en état de défaillance Robot_out! ====\n");
@@ -46,7 +46,7 @@ void			creation_robot_out(void)
 	long		i;
 
 	i = 0;
-	if (pthread_create(&thread_id, 0, fonc_thread_out, (void*)i) != 0)
+	if (pthread_create(&thread_id, 0, fonc_thread_out, (void*)i) != 0)	//creation du robot
 	{
 		error("Creation du robot out");
 		usleep(3000);
