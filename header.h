@@ -90,11 +90,11 @@ typedef struct	s_do_thr
 }				s_do_thr;
 
 int msgid_in;
-int msgid_out;
+int msgid_rbt_inst_table;
 int msgid_machine;
 int msgid_cmpt_rendu_mach;
 int msgid_fin_go;
-int msgid_rbt_inst_table;
+int msgid_out;
 
 void		error(char *msg);
 void 		gestionnaire_sigalrm(int inutilise);

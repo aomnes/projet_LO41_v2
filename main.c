@@ -1,5 +1,26 @@
 #include "header.h"
 
+void 		fonction_sigint(int signum)
+{
+	(void)	signum;
+	if (msgctl(msgid_in, IPC_RMID, NULL) == -1)
+		error("msgctl msgid_in");
+	if (msgctl(msgid_out, IPC_RMID, NULL) == -1)
+		error("msgctl msgid_out");
+	if (msgctl(msgid_machine, IPC_RMID, NULL) == -1)
+		error("msgctl msgid_machine");
+	if (msgctl(msgid_cmpt_rendu_mach, IPC_RMID, NULL) == -1)
+		error("msgctl msgid_cmpt_rendu_mach");
+	if (msgctl(msgid_fin_go, IPC_RMID, NULL) == -1)
+		error("msgctl msgid_fin_go");
+	if (msgctl(msgid_rbt_inst_table, IPC_RMID, NULL) == -1)
+		error("msgctl msgid_rbt_inst_table");
+	if (sem_unlink("/sem_convoyeur") == -1)
+		error("unlink_sem_convoyeur");
+	signal(SIGINT, SIG_DFL);
+	raise(SIGINT);
+}
+
 int			main(void)
 {
 	pid_t	pid;
@@ -10,6 +31,8 @@ int			main(void)
 	puts("Bienvenue");
 	sleep(1);
 	//modification des signaux
+	sig_t signal(int sig, sig_t func);
+	signal(SIGINT, fonction_sigint);
 	puts("Combien voulez-vous de machines? (entrer autre chose que 0)");
 	nb_machine = lire_nombre_sp();
 	piece = creation_piece(nb_machine, piece);//création des pièces
@@ -37,13 +60,20 @@ int			main(void)
 			wait(NULL);
 			free(piece);
 			free(nb_piece_sup);
-			/*if (sem_unlink("/sem_convoyeur") == -1)
-				error("unlink_sem_convoyeur");//
-			if (sem_unlink("/sem_machine") == -1)
-				error("unlink_sem_machine");
-
-			* intile pour le moment car superviseur(); non installe dans le case 0...
-			*/
+			if (msgctl(msgid_in, IPC_RMID, NULL) == -1)
+				error("msgctl msgid_in");
+			if (msgctl(msgid_out, IPC_RMID, NULL) == -1)
+				error("msgctl msgid_out");
+			if (msgctl(msgid_machine, IPC_RMID, NULL) == -1)
+				error("msgctl msgid_machine");
+			if (msgctl(msgid_cmpt_rendu_mach, IPC_RMID, NULL) == -1)
+				error("msgctl msgid_cmpt_rendu_mach");
+			if (msgctl(msgid_fin_go, IPC_RMID, NULL) == -1)
+				error("msgctl msgid_fin_go");
+			if (msgctl(msgid_rbt_inst_table, IPC_RMID, NULL) == -1)
+				error("msgctl msgid_rbt_inst_table");
+			if (sem_unlink("/sem_convoyeur") == -1)
+				error("unlink_sem_convoyeur");
 			break;
 	}
 	return (0);
