@@ -3,7 +3,7 @@
 
 #include "header.h"
 
-void				*fonc_thread(void *k)
+void				*fonc_thread(void *k)		//fonction exécutée par chaque machine
 {
 	s_do_thr		*info_thread;
 	s_info_trs		rep;
@@ -21,18 +21,18 @@ void				*fonc_thread(void *k)
 	{
 		if (msgrcv(msgid_machine, &rep, sizeof(s_info_trs) - sizeof(long), info_thread->num_thread + 10, 0) == -1)
 			error("msgrcv creation_machine rep #1");
-		if (rep.piece.def_work_machine)
+		if (rep.piece.def_work_machine)			//
 			ratio_defaut = 2;
 		else
 			ratio_defaut = 1;
-		if (sigsetjmp(contexte_sigalrm, 1) == 0)
+		if (sigsetjmp(contexte_sigalrm, 1) == 0)	//pas de defaillance
 		{
 			/* premier passage, installation */
 			printf("Usinage en cours, machine[%d]\n", info_thread->num_thread);
 			alarm(10000 * RATIO_TEMPS);//peut etre probleme car fonctionne avec sec...
 			usleep((1000000 * 4000) * RATIO_TEMPS * ratio_defaut);
 			alarm(0);
-			rep_cmpt_rendu.status = OK;
+			rep_cmpt_rendu.status = OK;		//on defini les reponses a envoyer
 			rep_cmpt_rendu.info_precedentes = rep;
 			rep_cmpt_rendu.type = 3;
 			printf("Piece [%d][%d] a fini d usiner... envoi du rapport\n", rep.num_machine, rep.num_piece);
@@ -45,7 +45,7 @@ void				*fonc_thread(void *k)
 			if (!(rep.num_piece - 1))//nb_recu par msgrcv(); ==> plus de pieces apres celle-ci donc FIN
 				break;
 		}
-		else
+		else					//piece defaillante
 		{
 			/* On est arrive par SIGALRM */
 			printf("\n==== Machine %d en defaillance! ====\n", rep.num_machine);
@@ -71,14 +71,14 @@ void			creation_machine(void)
 	if (!thread_id)
 		error("malloc thread_id creat_machine");
 	//msgrcv();
-	for(i = 0; i < nb_machine; i++)
+	for(i = 0; i < nb_machine; i++)		
 	{
 		info_thread = (s_do_thr*)malloc(sizeof(s_do_thr));//allouer une struct pour chaque thread et donc utilisation de pointeur car ils se suivent
 		if (!info_thread)
 			error("malloc info_thread creat_machine");
 		info_thread->nb_machine = nb_machine;
 		info_thread->num_thread = i;
-		if((rc = pthread_create(&thread_id[i], 0, (void *(*)(void *))fonc_thread, (void *) info_thread)) != 0)
+		if((rc = pthread_create(&thread_id[i], 0, (void *(*)(void *))fonc_thread, (void *) info_thread)) != 0)	//creation de toutes les machines (threads)
 		{
 			error("Creation de machine");
 			usleep(3000);
