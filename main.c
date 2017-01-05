@@ -81,12 +81,13 @@ void 		fonction_sigkill(int signum)
 		error("msgctl msgid_rbt_inst_table");
 	if (sem_unlink("/sem_convoyeur") == -1)
 		error("unlink_sem_convoyeur");
+	signal(SIGKILL, SIG_DFL);
 	raise(SIGKILL);
 }
 
 int			main(void)
 {
-	pid_t	pid;
+//	pid_t	pid;
 	s_piece **piece;
 
 	piece = NULL;
@@ -107,28 +108,12 @@ int			main(void)
 	creation_robot_install_table();
 	creation_robot_in();
 	creation_robot_out();
+	superviseur(piece);
 
-	//ne pas oublier d ajouter le signal() dans pour suprimer les ipcs
-	pid = fork();//création du processus superviseur
-	switch(pid)
-	{
-		case -1:
-			error("fork");
-			break;
-		case 0:
-			printf("Je suis le superviseur\n");
-			superviseur(piece);
-			exit(0);
-			break;
-		default:
-			printf("J'ai lancé le superviseur\n");
-			wait(NULL);
-			free(piece);
-			free(nb_piece_sup);
-			free(nb_piece);
-			fonction_spr_sem_msg();
-			break;
-	}
+	free(piece);
+	free(nb_piece_sup);
+	free(nb_piece);
+	fonction_spr_sem_msg();
+
 	return (0);
-	//free;
 }
