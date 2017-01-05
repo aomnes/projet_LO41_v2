@@ -106,7 +106,6 @@ void creation_sem_msg(void)
 		error("malloc chaine 1 PWD");
 	chaine[len_PWD + len_fichier] = '\0';
 	sprintf(chaine , "%s/robot_in.c", getenv("PWD"));
-	printf("%s\n", chaine);
 	CLEF_1 = ftok(chaine, 'A');
 	if (CLEF_1 == -1)
 		error("ftok CLEF_1");
