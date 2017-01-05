@@ -66,7 +66,6 @@ void 		fonction_sigegv(int signum)
 void 		fonction_sigkill(int signum)
 {
 	(void)	signum;
-	signal(SIGKILL, SIG_DFL);
 	if (msgctl(msgid_in, IPC_RMID, NULL) == -1)
 		error("msgctl msgid_in");
 	if (msgctl(msgid_out, IPC_RMID, NULL) == -1)

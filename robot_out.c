@@ -30,7 +30,7 @@ void			*fonc_thread_out(void *k)
 			/* On est arrive par SIGALRM */
 			puts("\n==== Systeme en état de défaillance Robot_out! ====\n");
 			sleep(10);
-			//fonction_spr_sem_msg();
+			fonction_spr_sem_msg();
 			exit(EXIT_FAILURE);
 		}
 	}

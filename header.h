@@ -91,6 +91,8 @@ int msgid_cmpt_rendu_mach;
 int msgid_fin_go;
 int msgid_out;
 
+//int pid_fils;
+
 void		error(char *msg);
 void		gestionnaire_sigalrm(int inutilise);
 void		creation_sem_msg(void);
@@ -107,7 +109,7 @@ int			lire_numero_type_def(int nb_machine);
 int			lire_numero_piece(int nb_piece);
 int			trouver_max(int *tab, int nb_element);
 
-void		superviseur(s_piece **piece);
+void		*superviseur(s_piece **piece);
 void		creation_robot_in(void);
 void		creation_robot_out(void);
 void		creation_robot_install_table(void);

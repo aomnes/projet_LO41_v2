@@ -9,7 +9,7 @@
 //int sem_wait (sem_t * sem ) <== P(s) --
 //int sem_post (sem_t * sem ) <== V(s) ++
 
-void 				superviseur(s_piece **piece)
+void 				*superviseur(s_piece **piece)
 {
 	int 			i;
 	int 			j;
@@ -55,7 +55,7 @@ void 				superviseur(s_piece **piece)
 			{
 				printf("==== Systeme en état de défaillance du a la machine: %d! ====", compte_rendu.info_precedentes.num_machine);
 				sleep(10);
-				//fonction_spr_sem_msg();
+				fonction_spr_sem_msg();
 				exit(EXIT_FAILURE);
 			}
 		}
@@ -78,4 +78,5 @@ void 				superviseur(s_piece **piece)
 			//lui envoi une piece
 		}
 	}
+	return (NULL);
 }

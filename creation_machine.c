@@ -29,7 +29,7 @@ void				*fonc_thread(void *k)
 		{
 			/* premier passage, installation */
 			alarm(50 * RATIO_TEMPS);//peut etre probleme car fonctionne avec sec...
-			usleep((1000000 * 50 - 10000) * RATIO_TEMPS * ratio_defaut);
+			usleep((1000000 * 100 - 10000) * RATIO_TEMPS * ratio_defaut);
 			alarm(0);
 			rep_cmpt_rendu.status = OK;
 			rep_cmpt_rendu.info_precedentes = rep;
@@ -40,7 +40,7 @@ void				*fonc_thread(void *k)
 			if (msgrcv(msgid_fin_go, &rep, sizeof(s_info_trs) - sizeof(long), 4, 0) == -1)
 				error("msgrcv creation_machine rep msgid_fin_go");
 			printf("Piece [%d][%d] va direction depot, elle est sur le convoyeur", rep.num_machine, rep.num_piece);
-			
+
 			if (!(rep.num_piece - 1))//nb_recu par msgrcv(); ==> plus de pieces apres celle-ci donc FIN
 				break;
 		}
