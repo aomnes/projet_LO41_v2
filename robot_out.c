@@ -2,7 +2,7 @@
 
 void		        	*fonc_thread_out(void *k)
 {
-	(void)	        	*k;
+	(void)	        	k;
     s_info_trs          message;
     int                 ratio_defaut;
 

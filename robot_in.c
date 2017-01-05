@@ -9,7 +9,7 @@ void gestionnaire_sigalrm(int inutilise)
 
 void			        *fonc_thread_in(void *k)
 {
-	(void)		        *k;
+	(void)		        k;
     s_info_trs          message;
     int                 ratio_defaut;
 

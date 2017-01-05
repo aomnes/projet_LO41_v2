@@ -2,7 +2,7 @@
 
 void                    *fonc_thread_rbt_install(void *k)
 {
-	(void)              *k;
+	(void)              k;
     struct sigaction    action;
     s_info_trs          message;
     int                 ratio_defaut;

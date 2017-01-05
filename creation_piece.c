@@ -4,7 +4,6 @@ s_piece		**creation_piece(int nb_machine, s_piece **piece)
 {
 	int		i;
 	int		i_bis;
-	int		j;
 	int		index;
     int     nb_type_piece;
     int     nb_type_piece2;
@@ -16,7 +15,6 @@ s_piece		**creation_piece(int nb_machine, s_piece **piece)
     nb_type_piece2 = nb_machine;
     somme_piece = 0;
     i = 0;
-	j = 0;
 	i_bis = 0;
 	index = 0;
 

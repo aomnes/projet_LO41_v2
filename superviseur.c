@@ -11,7 +11,6 @@
 
 void 				superviseur(s_piece **piece)
 {
-	int 			max_piece_type;
 	int 			i;
 	int 			j;
 	int 			somme;
@@ -28,7 +27,6 @@ void 				superviseur(s_piece **piece)
 	//remplissage nb_piece_sup
 	for (int count = 0; count < nb_machine; i++)
 			nb_piece_sup[count] = sizeof(piece[count])/sizeof(s_piece);
-	max_piece_type = trouver_max(nb_piece_sup, nb_machine);
 
 	while (i < nb_machine)
 	{
