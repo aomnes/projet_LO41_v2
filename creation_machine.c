@@ -19,10 +19,8 @@ void				*fonc_thread(void *k)		//fonction exécutée par chaque machine
 	}
 	while (1)
 	{
-		printf("debut machienslnfjbsfhjwlknfnWWWW\n");
 		if (msgrcv(msgid_machine, &rep, sizeof(s_info_trs) - sizeof(long), info_thread->num_thread + 10, 0) == -1)
 			error("msgrcv creation_machine rep #1");
-		printf("rep.piece.def_work_machin: %d\n", rep.piece.def_work_machine);
 		if (rep.piece.def_work_machine)
 			ratio_defaut = 2;
 		else
@@ -41,10 +39,8 @@ void				*fonc_thread(void *k)		//fonction exécutée par chaque machine
 			printf("Piece [%d][%d] a fini d usiner... envoi du rapport\n", rep.num_machine, rep.num_piece);
 			if (msgsnd(msgid_cmpt_rendu_mach, &rep_cmpt_rendu, sizeof(s_cmpt_rendu) - sizeof(long), 0) == -1)
 				error("msgsnd msgid_cmpt_rendu_mach creation_machine.c");
-			printf("message rendu  send\n");
 			if (msgrcv(msgid_fin_go, &rep, sizeof(s_info_trs) - sizeof(long), 4, 0) == -1)
 				error("msgrcv creation_machine rep msgid_fin_go");
-			printf("piece go depot\n");
 			printf("Piece [%d][%d] va direction depot, elle est sur le convoyeur\n", rep.num_machine, rep.num_piece);
 		}
 		else					//piece defaillante
@@ -57,7 +53,6 @@ void				*fonc_thread(void *k)		//fonction exécutée par chaque machine
 			if (msgsnd(msgid_cmpt_rendu_mach, &rep_cmpt_rendu, sizeof(s_cmpt_rendu) - sizeof(long), 0) == -1)
 				error("msgsnd msgid_cmpt_rendu_mach creation_machine.c");
 		}
-		printf("BREAK!!!!!!!!!!%d // %d\n", rep.num_piece, nb_piece[rep.num_machine] - 1);
 		if (nb_piece[rep.num_machine] - 1 == rep.num_piece)//nb_recu par msgrcv(); ==> plus de pieces apres celle-ci donc FIN
 			break;
 	}
@@ -75,7 +70,6 @@ void			creation_machine(void)
 	thread_id = (pthread_t*)malloc(sizeof(pthread_t) * nb_machine);//ne pas oublier de free(2) à la  et signal
 	if (!thread_id)
 		error("malloc thread_id creat_machine");
-	//msgrcv();
 	for(i = 0; i < nb_machine; i++)
 	{
 		info_thread = (s_do_thr*)malloc(sizeof(s_do_thr));//allouer une struct pour chaque thread et donc utilisation de pointeur car ils se suivent

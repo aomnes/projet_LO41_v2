@@ -21,16 +21,7 @@ void 				*superviseur(s_piece **piece)
 	i = 0;
 	j = 0;
 	somme = 0;
-	/*nb_piece_sup = (int*)malloc(sizeof(int) * nb_machine);
-	if (!nb_piece_sup)
-		error("malloc nb_piece_sup superviseur");
-	//remplissage nb_piece_sup
-	for (int count = 0; count < nb_machine; count++)
-	{
-			nb_piece_sup[count] = sizeof(piece[count])/sizeof(s_piece);
-			printf("nb_piece_sup[%d] = %d\n", count, nb_piece_sup[count]);
-	}
-	*/
+
 	while (i < nb_machine)
 	{
 		if (nb_piece[i] != 0)
@@ -48,15 +39,10 @@ void 				*superviseur(s_piece **piece)
 		somme++;
 		i++;
 	}//toutes les machines son remplies de pieces en premier
-	printf("somme : %d somme_piece_sup: %d\n", somme, somme_piece_sup);
 	while (somme <= somme_piece_sup + nb_machine - 1)
 	{
-		printf("...\n");
-		//if (somme == somme_piece_sup + nb_machine - i)
-		//	break;
 		if (msgrcv(msgid_cmpt_rendu_mach, &compte_rendu, sizeof(s_cmpt_rendu) - sizeof(long), 3, 0) == -1)//recoit rapport
 			error("msgrcv msgid_cmpt_rendu_mach sup.c");
-		printf("...OK\n");
 		if (compte_rendu.status == DEFAILLANCE)
 		{
 			printf("Defaillance machine numero: %d\n", compte_rendu.info_precedentes.num_machine);
@@ -73,15 +59,12 @@ void 				*superviseur(s_piece **piece)
 		}
 		else
 		{
-			printf("msgid_fin_go send #1\n");
 			compte_rendu.info_precedentes.type = 4;
 			if (msgsnd(msgid_fin_go, &compte_rendu.info_precedentes, sizeof(s_info_trs) - sizeof(long), 0) == -1)//ok va y
 				error("msgsnd msgid_fin_go sup.c");
-			printf("msgid_fin_go send #2\n");
 			compte_rendu.info_precedentes.type = 5;
 			if (msgsnd(msgid_out, &compte_rendu.info_precedentes, sizeof(s_info_trs) - sizeof(long), 0) == -1)//ok va y
 				error("msgsnd msgid_out sup.c");
-			//printf("msgid_out send #\n");
 			sem_wait(sem_convoyeur);//attente du convoyeur libre puis la prend
 			envoi.num_machine = compte_rendu.info_precedentes.num_machine;
 			envoi.num_piece = compte_rendu.info_precedentes.num_piece + 1;
@@ -91,13 +74,11 @@ void 				*superviseur(s_piece **piece)
 				envoi.extinction = true;
 			if (msgsnd(msgid_in, &envoi, sizeof(s_info_trs) - sizeof(long), 0) == -1)
 				error("msgsnd msgid_in sup.c #2");
-			//printf("msgid_in send ########\n");
 			somme++;
 			//lui envoi une piece
 		}
-		printf("#####somme : %d somme_piece_sup: %d\n", somme, somme_piece_sup);
 	}
-	puts("superviseur attend l arrêt du Robot_out\n");
+	puts("Superviseur attend l arrêt du Robot_out\n");
 	if (msgrcv(msgid_out_fin, &quitter, sizeof(s_info_trs) - sizeof(long), 100, 0) == -1)
 		error("msgsnd msgid_out_fin robot_out.c");
 	return (NULL);
