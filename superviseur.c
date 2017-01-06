@@ -47,7 +47,8 @@ void 				*superviseur(s_piece **piece)
 		somme++;
 		i++;
 	}//toutes les machines son remplies de pieces en premier
-	while (somme != somme_piece_sup)
+	printf("somme : %d somme_piece_sup: %d\n", somme, somme_piece_sup);
+	while (somme <= somme_piece_sup)
 	{
 		printf("...\n");
 		if (msgrcv(msgid_cmpt_rendu_mach, &compte_rendu, sizeof(s_cmpt_rendu) - sizeof(long), 3, 0) == -1)//recoit rapport
@@ -59,10 +60,12 @@ void 				*superviseur(s_piece **piece)
 			if (nb_piece[compte_rendu.info_precedentes.num_machine] < compte_rendu.info_precedentes.num_piece)
 			{
 				printf("==== Systeme en état de défaillance du a la machine: %d! ====", compte_rendu.info_precedentes.num_machine);
-				puts("10s...");
-				sleep(10);
-				fonction_spr_sem_msg();
-				exit(EXIT_FAILURE);
+				somme++;
+				break;
+				//puts("10s...");
+				//sleep(10);
+				//fonction_spr_sem_msg();
+				//exit(EXIT_FAILURE);
 			}
 		}
 		else
@@ -81,12 +84,17 @@ void 				*superviseur(s_piece **piece)
 			envoi.num_piece = compte_rendu.info_precedentes.num_piece + 1;
 			envoi.piece = piece[compte_rendu.info_precedentes.num_machine][compte_rendu.info_precedentes.num_piece + 1];
 			envoi.type = 50;
+			if (somme == somme_piece_sup)
+				envoi.extinction = true;
 			if (msgsnd(msgid_in, &envoi, sizeof(s_info_trs) - sizeof(long), 0) == -1)
 				error("msgsnd msgid_in sup.c #2");
 			//printf("msgid_in send ########\n");
 			somme++;
 			//lui envoi une piece
 		}
+		printf("#####somme : %d somme_piece_sup: %d\n", somme, somme_piece_sup);
 	}
+	printf("Attent 3s...\n");
+	sleep(100);
 	return (NULL);
 }

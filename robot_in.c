@@ -19,6 +19,11 @@ void			*fonc_thread_in(void *k)
 		//ssize_t msgrcv(int msqid, void *msgp, size_t msgsz, long msgtyp, int msgflg);
 		if (msgrcv(msgid_in, &message, sizeof(s_info_trs) - sizeof(long), 50, 0) == -1)
 			error("msgrcv msgid_in");
+		if (message.extinction)
+		{
+			puts("Extinction Robot_in\n");
+			break;
+		}
 		if (message.piece.def_in)
 			ratio_defaut = 2;
 		else

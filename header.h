@@ -65,6 +65,7 @@ typedef struct	s_piece
 typedef struct	s_info_trs
 {
 	long		type;
+	bool		extinction;
 	int			num_machine;
 	int			num_piece;//piece restante pour la machine en comptant celle qui est envoyé
 	s_piece		piece;

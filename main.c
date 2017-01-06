@@ -107,11 +107,11 @@ int			main(void)
 	creation_robot_in();
 	creation_robot_out();
 	superviseur(piece);//lancement du superviseur
-
+	printf("Va bientot quitter le main...\n");
 	free(piece);
 	free(nb_piece_sup);
 	free(nb_piece);
 	fonction_spr_sem_msg();//suprimer le/les sem files de message
-
+	printf("Va quitter le main...\n");
 	return (0);
 }
