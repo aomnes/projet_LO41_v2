@@ -19,8 +19,10 @@ void				*fonc_thread(void *k)		//fonction exécutée par chaque machine
 	}
 	while (1)
 	{
+		printf("debut machienslnfjbsfhjwlknfnWWWW\n");
 		if (msgrcv(msgid_machine, &rep, sizeof(s_info_trs) - sizeof(long), info_thread->num_thread + 10, 0) == -1)
 			error("msgrcv creation_machine rep #1");
+		printf("rep.piece.def_work_machin: %d\n", rep.piece.def_work_machine);
 		if (rep.piece.def_work_machine)
 			ratio_defaut = 2;
 		else
@@ -55,7 +57,8 @@ void				*fonc_thread(void *k)		//fonction exécutée par chaque machine
 			if (msgsnd(msgid_cmpt_rendu_mach, &rep_cmpt_rendu, sizeof(s_cmpt_rendu) - sizeof(long), 0) == -1)
 				error("msgsnd msgid_cmpt_rendu_mach creation_machine.c");
 		}
-		if (!(rep.num_piece - 1))//nb_recu par msgrcv(); ==> plus de pieces apres celle-ci donc FIN
+		printf("BREAK!!!!!!!!!!%d // %d\n", rep.num_piece, nb_piece[rep.num_machine] - 1);
+		if (nb_piece[rep.num_machine] - 1 == rep.num_piece)//nb_recu par msgrcv(); ==> plus de pieces apres celle-ci donc FIN
 			break;
 	}
 	printf("Machine %d eteinte\n", info_thread->num_thread);

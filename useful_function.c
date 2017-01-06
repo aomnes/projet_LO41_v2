@@ -22,7 +22,7 @@ void			error(char *msg)
 {
 	perror(msg);
 	fonction_spr_sem_msg();
-	exit(0);
+	exit(EXIT_FAILURE);
 }
 
 int				lire_nombre_sp(void) //fonction de récupération paramètre utilisateur avec vérification de la donnée

@@ -20,15 +20,19 @@ void 				*superviseur(s_piece **piece)
 	i = 0;
 	j = 0;
 	somme = 0;
-	nb_piece_sup = (int*)malloc(sizeof(int) * nb_machine);
+	/*nb_piece_sup = (int*)malloc(sizeof(int) * nb_machine);
 	if (!nb_piece_sup)
 		error("malloc nb_piece_sup superviseur");
 	//remplissage nb_piece_sup
 	for (int count = 0; count < nb_machine; count++)
+	{
 			nb_piece_sup[count] = sizeof(piece[count])/sizeof(s_piece);
+			printf("nb_piece_sup[%d] = %d\n", count, nb_piece_sup[count]);
+	}
+	*/
 	while (i < nb_machine)
 	{
-		if (nb_piece_sup[i] != 0)
+		if (nb_piece[i] != 0)
 		{
 			sem_wait(sem_convoyeur);//attente du convoyeur libre
 			envoi.num_machine = i;
@@ -52,7 +56,7 @@ void 				*superviseur(s_piece **piece)
 		if (compte_rendu.status == DEFAILLANCE)
 		{
 			printf("Defaillance machine numero: %d\n", compte_rendu.info_precedentes.num_machine);
-			if (nb_piece_sup[compte_rendu.info_precedentes.num_machine] < compte_rendu.info_precedentes.num_piece)
+			if (nb_piece[compte_rendu.info_precedentes.num_machine] < compte_rendu.info_precedentes.num_piece)
 			{
 				printf("==== Systeme en état de défaillance du a la machine: %d! ====", compte_rendu.info_precedentes.num_machine);
 				puts("10s...");
