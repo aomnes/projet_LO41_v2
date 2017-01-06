@@ -1,6 +1,6 @@
 #include "header.h"
 
-void			fonction_spr_sem_msg(void)	//
+void			fonction_spr_sem_msg(void)
 {
 	if (msgctl(msgid_in, IPC_RMID, NULL) == -1)
 		error("msgctl msgid_in");
@@ -90,7 +90,7 @@ int				lire_numero_piece(int nb_piece)	//fonction de récupération paramètre u
 	return (d);
 }
 
-int				trouver_max(int *tab, int nb_element)	//
+int				trouver_max(int *tab, int nb_element)
 {
 	int			max;
 	int			index;
