@@ -63,12 +63,15 @@ void 				*superviseur(s_piece **piece)
 		}
 		else
 		{
-			compte_rendu.type = 4;
+			printf("msgid_fin_go send #1\n");
+			compte_rendu.info_precedentes.type = 4;
 			if (msgsnd(msgid_fin_go, &compte_rendu.info_precedentes, sizeof(s_info_trs) - sizeof(long), 0) == -1)//ok va y
 				error("msgsnd msgid_fin_go sup.c");
-			compte_rendu.type = 5;
+			printf("msgid_fin_go send #2\n");
+			compte_rendu.info_precedentes.type = 5;
 			if (msgsnd(msgid_out, &compte_rendu.info_precedentes, sizeof(s_info_trs) - sizeof(long), 0) == -1)//ok va y
 				error("msgsnd msgid_out sup.c");
+			//printf("msgid_out send #\n");
 			sem_wait(sem_convoyeur);//attente du convoyeur libre puis la prend
 			envoi.num_machine = compte_rendu.info_precedentes.num_machine;
 			envoi.num_piece = compte_rendu.info_precedentes.num_piece + 1;
@@ -76,6 +79,7 @@ void 				*superviseur(s_piece **piece)
 			envoi.type = 50;
 			if (msgsnd(msgid_in, &envoi, sizeof(s_info_trs) - sizeof(long), 0) == -1)
 				error("msgsnd msgid_in sup.c #2");
+			//printf("msgid_in send ########\n");
 			somme++;
 			//lui envoi une piece
 		}

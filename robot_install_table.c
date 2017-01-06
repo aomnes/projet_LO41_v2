@@ -17,7 +17,6 @@ void				*fonc_thread_rbt_install(void *k)
 		//ssize_t msgrcv(int msqid, void *msgp, size_t msgsz, long msgtyp, int msgflg);
 		if (msgrcv(msgid_rbt_inst_table, &message, sizeof(s_info_trs) - sizeof(long), 1, 0) == -1)
 			error("msgrcv msgid_rbt_inst_table");
-		sem_post(sem_convoyeur);//++
 		if (message.piece.def_retire_conv)		//si la piece est defectueuse, les temps de manipulation seront multipliés par deux
 			ratio_defaut = 2;
 		else
@@ -33,6 +32,7 @@ void				*fonc_thread_rbt_install(void *k)
 			if (msgsnd(msgid_machine, &message, sizeof(s_info_trs) - sizeof(long), 0) == -1)
 				error("msgsnd msgid_machine");
 			printf("Ok ! Piece machine:[%d] piece:[%d]sur la table\n", message.num_machine, message.num_piece);
+			sem_post(sem_convoyeur);//++
 		}
 		else
 		{

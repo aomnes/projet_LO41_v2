@@ -42,7 +42,8 @@ void				*fonc_thread(void *k)		//fonction exécutée par chaque machine
 			printf("message rendu  send\n");
 			if (msgrcv(msgid_fin_go, &rep, sizeof(s_info_trs) - sizeof(long), 4, 0) == -1)
 				error("msgrcv creation_machine rep msgid_fin_go");
-			printf("Piece [%d][%d] va direction depot, elle est sur le convoyeur", rep.num_machine, rep.num_piece);
+			printf("piece go depot\n");
+			printf("Piece [%d][%d] va direction depot, elle est sur le convoyeur\n", rep.num_machine, rep.num_piece);
 		}
 		else					//piece defaillante
 		{
