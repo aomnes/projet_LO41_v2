@@ -91,8 +91,6 @@ int msgid_cmpt_rendu_mach;
 int msgid_fin_go;
 int msgid_out;
 
-//int pid_fils;
-
 void		error(char *msg);
 void		gestionnaire_sigalrm(int inutilise);
 void		creation_sem_msg(void);
