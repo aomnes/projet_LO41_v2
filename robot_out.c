@@ -34,7 +34,7 @@ void			*fonc_thread_out(void *k)
 			alarm(20 * RATIO_TEMPS);//peut etre probleme car fonctionne avec sec...
 			usleep((1000000 * 20 - 10000) * RATIO_TEMPS * ratio_defaut);
 			alarm(0);
-			puts("Ok ! Piece sur dans le depot\n");
+			puts("Ok ! Piece dans le depot\n");
 		}
 		else	//si la piece est defectueuse
 		{
