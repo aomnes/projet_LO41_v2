@@ -53,12 +53,12 @@ s_piece		**creation_piece(int nb_machine, s_piece **piece)
 			error("malloc creation tableau piece[index]");
 		index++;
 	}
-	puts("Dans ce test y aura-t-il des erreurs?\n\		
-			0. non\n\				//on demande si il y aura des erreurs et si oui, quel type
-			1. defaut robot entre\n\ 
+	puts("Dans ce test y aura-t-il des erreurs?\n\
+			0. non\n\
+			1. defaut robot entre\n\
 			2. defaut robot sortie\n\
 			3. defaut retire convoyeur pour table\n\
-			4. defaut duree de travail machine");
+			4. defaut duree de travail machine");//on demande si il y aura des erreurs et si oui, quel type
 	defaut = lire_nombre_defaut();
 	while (i < nb_machine)//init defaut 0		on initialise les pieces comme n'ayant aucun défaut
 	{
