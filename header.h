@@ -40,7 +40,7 @@ int 		*nb_piece_sup;
 int			*nb_piece;
 
 #define CONVOYER_VERIF 0 //nb pour les semaphores
-#define RATIO_TEMPS 0.02
+#define RATIO_TEMPS 0.2
 
 int		defaut; /* ==>
 0. non

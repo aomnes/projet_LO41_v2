@@ -25,17 +25,16 @@ void			*fonc_thread_in(void *k)
 			break;
 		}
 		if (message.piece.def_in)
-			ratio_defaut = 2;
+			ratio_defaut = 100;
 		else
 			ratio_defaut = 1;
 		if (sigsetjmp(contexte_sigalrm, 1) == 0)
 		{
 			/* premier passage, installation */
-			alarm(20 * RATIO_TEMPS);//peut etre probleme car fonctionne avec sec...
-			usleep((1000000 * 20 - 10000) * RATIO_TEMPS * ratio_defaut);
+			alarm(10 * RATIO_TEMPS);//peut etre probleme car fonctionne avec sec...
+			usleep(1000000 * 8 * RATIO_TEMPS * ratio_defaut);
 			alarm(0);
 			puts("Ok ! Piece sur le convoyeur (Robot_in)\n");
-			sleep(1);
 			message.type = 1;
 			if (msgsnd(msgid_rbt_inst_table, &message, sizeof(s_info_trs) - sizeof(long), 0) == -1)
 				error("msgsnd msgid_in -> msgid_rbt_inst_table");
@@ -44,8 +43,8 @@ void			*fonc_thread_in(void *k)
 		{
 			/* On est arrive par SIGALRM */
 			puts("\n==== Systeme en état de défaillance Robot_in! ====\n");	//si il y a une defaillance, on envoie un message différent
-			puts("10s...");
-			sleep(10);
+			puts("...");
+			sleep(3);
 			fonction_spr_sem_msg();
 			exit(EXIT_FAILURE);
 		}

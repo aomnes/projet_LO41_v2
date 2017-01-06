@@ -24,15 +24,15 @@ void			*fonc_thread_out(void *k)
 		if (msgrcv(msgid_out, &message, sizeof(s_info_trs) - sizeof(long), 5, 0) == -1)
 			error("msgrcv msgid_out");
 		if (message.piece.def_out)	//si la piece est défectueuse
-			ratio_defaut = 2;
+			ratio_defaut = 100;
 		else
 			ratio_defaut = 1;
 		sem_post(sem_convoyeur);//capteur allume, piece n est plus sur le convoyeur
 		if (sigsetjmp(contexte_sigalrm, 1) == 0)
 		{
 			/* premier passage, installation */
-			alarm(20 * RATIO_TEMPS);//peut etre probleme car fonctionne avec sec...
-			usleep((1000000 * 20 - 10000) * RATIO_TEMPS * ratio_defaut);
+			alarm(10 * RATIO_TEMPS);//peut etre probleme car fonctionne avec sec...
+			usleep(1000000 * 8 * RATIO_TEMPS * ratio_defaut);
 			alarm(0);
 			puts("Ok ! Piece dans le depot\n");
 		}
@@ -40,8 +40,8 @@ void			*fonc_thread_out(void *k)
 		{
 			/* On est arrive par SIGALRM */
 			puts("\n==== Systeme en état de défaillance Robot_out! ====\n");
-			puts("10s...");
-			sleep(10);
+			puts("...");
+			sleep(3);
 			fonction_spr_sem_msg();
 			exit(EXIT_FAILURE);
 		}

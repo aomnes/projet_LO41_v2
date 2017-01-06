@@ -22,17 +22,16 @@ void				*fonc_thread(void *k)		//fonction exécutée par chaque machine
 		if (msgrcv(msgid_machine, &rep, sizeof(s_info_trs) - sizeof(long), info_thread->num_thread + 10, 0) == -1)
 			error("msgrcv creation_machine rep #1");
 		if (rep.piece.def_work_machine)
-			ratio_defaut = 2;
+			ratio_defaut = 100;
 		else
 			ratio_defaut = 1;
 		if (sigsetjmp(contexte_sigalrm, 1) == 0)	//pas de defaillance
 		{
 			/* premier passage, installation */
 			printf("Usinage en cours, machine[%d]\n", info_thread->num_thread);
-			//alarm(10000 * RATIO_TEMPS);//peut etre probleme car fonctionne avec sec...
-			//usleep((1000000 * 4000) * RATIO_TEMPS * ratio_defaut);
-			//alarm(0);
-			sleep(1);
+			alarm(100 * RATIO_TEMPS);//peut etre probleme car fonctionne avec sec...
+			usleep(1000000 * 80 * RATIO_TEMPS * ratio_defaut);
+			alarm(0);
 			rep_cmpt_rendu.status = OK;		//on defini les reponses a envoyer
 			rep_cmpt_rendu.info_precedentes = rep;
 			rep_cmpt_rendu.type = 3;

@@ -38,7 +38,6 @@ int			main(void)
 
 	piece = NULL;
 	puts("Bienvenue");
-	sleep(1);
 	//modification des signaux
 	signal(SIGSEGV, fonction_sigegv);
 	signal(SIGINT, fonction_sigint);
