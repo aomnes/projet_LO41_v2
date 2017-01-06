@@ -106,7 +106,7 @@ int				trouver_max(int *tab, int nb_element)	//
 	return (max);
 }
 
-void			creation_sem_msg(void)	//creation ds differentes files de message
+void			creation_sem_msg(void)	//creation ds differentes files de message et semaphore
 {
 	key_t		CLEF_1;
 	key_t		CLEF_2;

@@ -38,7 +38,7 @@ void				*fonc_thread_rbt_install(void *k)
 		{
 			/* On est arrive par SIGALRM */
 			puts("\n==== Systeme en état de défaillance Robot_intall_table! ====\n");
-			puts("10s...XD");	//la piece est defectueuse
+			puts("10s...");	//la piece est defectueuse
 			sleep(10);
 			fonction_spr_sem_msg();
 			exit(EXIT_FAILURE);
