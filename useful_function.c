@@ -1,6 +1,6 @@
 #include "header.h"
 
-void			fonction_spr_sem_msg(void)
+void			fonction_spr_sem_msg(void)	//
 {
 	if (msgctl(msgid_in, IPC_RMID, NULL) == -1)
 		error("msgctl msgid_in");
@@ -25,7 +25,7 @@ void			error(char *msg)
 	exit(0);
 }
 
-int				lire_nombre_sp(void)
+int				lire_nombre_sp(void) //fonction de récupération paramètre utilisateur avec vérification de la donnée
 {
 	int 		d;
 	int 		c;
@@ -38,7 +38,7 @@ int				lire_nombre_sp(void)
 	return (d);
 }
 
-int				lire_nombre_p(void)
+int				lire_nombre_p(void)	//fonction de récupération paramètre utilisateur avec vérification de la donnée
 {
 	int			d;
 	int			c;
@@ -51,7 +51,7 @@ int				lire_nombre_p(void)
 	return (d);
 }
 
-int				lire_nombre_defaut(void)
+int				lire_nombre_defaut(void)	//fonction de récupération paramètre utilisateur avec vérification de la donnée
 {
 	int			d;
 	int			c;
@@ -64,7 +64,7 @@ int				lire_nombre_defaut(void)
 	return (d);
 }
 
-int				lire_numero_type_def(int nb_machine)
+int				lire_numero_type_def(int nb_machine)	//fonction de récupération paramètre utilisateur avec vérification de la donnée
 {
 	int			d;
 	int			c;
@@ -77,7 +77,7 @@ int				lire_numero_type_def(int nb_machine)
 	return (d);
 }
 
-int				lire_numero_piece(int nb_piece)
+int				lire_numero_piece(int nb_piece)	//fonction de récupération paramètre utilisateur avec vérification de la donnée
 {
 	int			d;
 	int			c;
@@ -90,7 +90,7 @@ int				lire_numero_piece(int nb_piece)
 	return (d);
 }
 
-int				trouver_max(int *tab, int nb_element)
+int				trouver_max(int *tab, int nb_element)	//
 {
 	int			max;
 	int			index;
@@ -106,7 +106,7 @@ int				trouver_max(int *tab, int nb_element)
 	return (max);
 }
 
-void			creation_sem_msg(void)
+void			creation_sem_msg(void)	//creation ds differentes files de message
 {
 	key_t		CLEF_1;
 	key_t		CLEF_2;
