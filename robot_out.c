@@ -4,12 +4,23 @@ void			*fonc_thread_out(void *k)
 {
 	(void)			k;
 	s_info_trs		message;
+	s_extinction	fin;
 	int				ratio_defaut;
+	int				somme_out;
 
+	somme_out = 0;
 	puts("Robot out allume\n");
 	while (1)
 	{
-		//ssize_t msgrcv(int msqid, void *msgp, size_t msgsz, long msgtyp, int msgflg);
+		if (somme_out == somme_piece_sup)//somme_piece variable globale
+		{
+			fin.type = 100;
+			fin.valeur = true;
+			if (msgsnd(msgid_out_fin, &fin, sizeof(s_info_trs) - sizeof(long), 0) == -1)
+				error("msgsnd msgid_out_fin robot_out.c");
+			break;
+		}
+		// msgrcv(int msqid, void *msgp, size_t msgsz, long msgtyp, int msgflg);
 		if (msgrcv(msgid_out, &message, sizeof(s_info_trs) - sizeof(long), 5, 0) == -1)
 			error("msgrcv msgid_out");
 		if (message.piece.def_out)	//si la piece est défectueuse
@@ -34,6 +45,7 @@ void			*fonc_thread_out(void *k)
 			fonction_spr_sem_msg();
 			exit(EXIT_FAILURE);
 		}
+		somme_out++;
 	}
 	puts("Robot out eteint\n");
 	return (NULL);

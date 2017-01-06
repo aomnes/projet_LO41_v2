@@ -16,6 +16,7 @@ void 				*superviseur(s_piece **piece)
 	int 			somme;
 	s_info_trs		envoi;
 	s_cmpt_rendu	compte_rendu;
+	s_extinction	quitter;
 
 	i = 0;
 	j = 0;
@@ -48,9 +49,11 @@ void 				*superviseur(s_piece **piece)
 		i++;
 	}//toutes les machines son remplies de pieces en premier
 	printf("somme : %d somme_piece_sup: %d\n", somme, somme_piece_sup);
-	while (somme <= somme_piece_sup)
+	while (somme <= somme_piece_sup + nb_machine - 1)
 	{
 		printf("...\n");
+		//if (somme == somme_piece_sup + nb_machine - i)
+		//	break;
 		if (msgrcv(msgid_cmpt_rendu_mach, &compte_rendu, sizeof(s_cmpt_rendu) - sizeof(long), 3, 0) == -1)//recoit rapport
 			error("msgrcv msgid_cmpt_rendu_mach sup.c");
 		printf("...OK\n");
@@ -94,7 +97,8 @@ void 				*superviseur(s_piece **piece)
 		}
 		printf("#####somme : %d somme_piece_sup: %d\n", somme, somme_piece_sup);
 	}
-	printf("Attent 3s...\n");
-	sleep(100);
+	puts("superviseur attend l arrêt du Robot_out\n");
+	if (msgrcv(msgid_out_fin, &quitter, sizeof(s_info_trs) - sizeof(long), 100, 0) == -1)
+		error("msgsnd msgid_out_fin robot_out.c");
 	return (NULL);
 }

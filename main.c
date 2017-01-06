@@ -4,20 +4,7 @@ void 		fonction_sigint(int signum)
 {
 	(void)	signum;
 	signal(SIGINT, SIG_DFL);
-	if (msgctl(msgid_in, IPC_RMID, NULL) == -1)
-		error("msgctl msgid_in");
-	if (msgctl(msgid_out, IPC_RMID, NULL) == -1)
-		error("msgctl msgid_out");
-	if (msgctl(msgid_machine, IPC_RMID, NULL) == -1)
-		error("msgctl msgid_machine");
-	if (msgctl(msgid_cmpt_rendu_mach, IPC_RMID, NULL) == -1)
-		error("msgctl msgid_cmpt_rendu_mach");
-	if (msgctl(msgid_fin_go, IPC_RMID, NULL) == -1)
-		error("msgctl msgid_fin_go");
-	if (msgctl(msgid_rbt_inst_table, IPC_RMID, NULL) == -1)
-		error("msgctl msgid_rbt_inst_table");
-	if (sem_unlink("/sem_convoyeur") == -1)
-		error("unlink_sem_convoyeur");
+	fonction_spr_sem_msg();
 	raise(SIGINT);
 }
 
@@ -25,20 +12,7 @@ void 		fonction_sigbus(int signum)
 {
 	(void)	signum;
 	signal(SIGBUS, SIG_DFL);
-	if (msgctl(msgid_in, IPC_RMID, NULL) == -1)
-		error("msgctl msgid_in");
-	if (msgctl(msgid_out, IPC_RMID, NULL) == -1)
-		error("msgctl msgid_out");
-	if (msgctl(msgid_machine, IPC_RMID, NULL) == -1)
-		error("msgctl msgid_machine");
-	if (msgctl(msgid_cmpt_rendu_mach, IPC_RMID, NULL) == -1)
-		error("msgctl msgid_cmpt_rendu_mach");
-	if (msgctl(msgid_fin_go, IPC_RMID, NULL) == -1)
-		error("msgctl msgid_fin_go");
-	if (msgctl(msgid_rbt_inst_table, IPC_RMID, NULL) == -1)
-		error("msgctl msgid_rbt_inst_table");
-	if (sem_unlink("/sem_convoyeur") == -1)
-		error("unlink_sem_convoyeur");
+	fonction_spr_sem_msg();
 	raise(SIGBUS);
 }
 
@@ -46,40 +20,14 @@ void 		fonction_sigegv(int signum)
 {
 	(void)	signum;
 	signal(SIGSEGV, SIG_DFL);
-	if (msgctl(msgid_in, IPC_RMID, NULL) == -1)
-		error("msgctl msgid_in");
-	if (msgctl(msgid_out, IPC_RMID, NULL) == -1)
-		error("msgctl msgid_out");
-	if (msgctl(msgid_machine, IPC_RMID, NULL) == -1)
-		error("msgctl msgid_machine");
-	if (msgctl(msgid_cmpt_rendu_mach, IPC_RMID, NULL) == -1)
-		error("msgctl msgid_cmpt_rendu_mach");
-	if (msgctl(msgid_fin_go, IPC_RMID, NULL) == -1)
-		error("msgctl msgid_fin_go");
-	if (msgctl(msgid_rbt_inst_table, IPC_RMID, NULL) == -1)
-		error("msgctl msgid_rbt_inst_table");
-	if (sem_unlink("/sem_convoyeur") == -1)
-		error("unlink_sem_convoyeur");
+	fonction_spr_sem_msg();
 	raise(SIGSEGV);
 }
 
 void 		fonction_sigkill(int signum)
 {
 	(void)	signum;
-	if (msgctl(msgid_in, IPC_RMID, NULL) == -1)
-		error("msgctl msgid_in");
-	if (msgctl(msgid_out, IPC_RMID, NULL) == -1)
-		error("msgctl msgid_out");
-	if (msgctl(msgid_machine, IPC_RMID, NULL) == -1)
-		error("msgctl msgid_machine");
-	if (msgctl(msgid_cmpt_rendu_mach, IPC_RMID, NULL) == -1)
-		error("msgctl msgid_cmpt_rendu_mach");
-	if (msgctl(msgid_fin_go, IPC_RMID, NULL) == -1)
-		error("msgctl msgid_fin_go");
-	if (msgctl(msgid_rbt_inst_table, IPC_RMID, NULL) == -1)
-		error("msgctl msgid_rbt_inst_table");
-	if (sem_unlink("/sem_convoyeur") == -1)
-		error("unlink_sem_convoyeur");
+	fonction_spr_sem_msg();
 	signal(SIGKILL, SIG_DFL);
 	raise(SIGKILL);
 }

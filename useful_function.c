@@ -14,6 +14,8 @@ void			fonction_spr_sem_msg(void)
 		error("msgctl msgid_fin_go");
 	if (msgctl(msgid_rbt_inst_table, IPC_RMID, NULL) == -1)
 		error("msgctl msgid_rbt_inst_table");
+	if (msgctl(msgid_out_fin, IPC_RMID, NULL) == -1)
+		error("msgctl msgid_out_fin");
 	if (sem_unlink("/sem_convoyeur") == -1)
 		error("unlink_sem_convoyeur");
 }
@@ -114,6 +116,7 @@ void			creation_sem_msg(void)	//creation ds differentes files de message et sema
 	key_t		CLEF_4;
 	key_t		CLEF_5;
 	key_t		CLEF_6;
+	key_t		CLEF_7;
 	char		*chaine;
 	int			len_PWD;
 	int			len_fichier;
@@ -137,7 +140,7 @@ void			creation_sem_msg(void)	//creation ds differentes files de message et sema
 	chaine[len_PWD + len_fichier] = '\0';
 	sprintf(chaine , "%s/robot_install_table.c", getenv("PWD"));
 	CLEF_2 = ftok(chaine, 'B');
-	if (CLEF_1 == -1)
+	if (CLEF_2 == -1)
 		error("ftok CLEF_2");
 	free(chaine);
 
@@ -148,7 +151,7 @@ void			creation_sem_msg(void)	//creation ds differentes files de message et sema
 	chaine[len_PWD + len_fichier] = '\0';
 	sprintf(chaine , "%s/creation_machine.c", getenv("PWD"));
 	CLEF_3 = ftok(chaine, 'C');
-	if (CLEF_1 == -1)
+	if (CLEF_3 == -1)
 		error("ftok CLEF_3");
 	free(chaine);
 
@@ -159,7 +162,7 @@ void			creation_sem_msg(void)	//creation ds differentes files de message et sema
 	chaine[len_PWD + len_fichier] = '\0';
 	sprintf(chaine , "%s/superviseur.c", getenv("PWD"));
 	CLEF_4 = ftok(chaine, 'D');
-	if (CLEF_1 == -1)
+	if (CLEF_4 == -1)
 		error("ftok CLEF_4");
 	free (chaine);
 
@@ -170,7 +173,7 @@ void			creation_sem_msg(void)	//creation ds differentes files de message et sema
 	chaine[len_PWD + len_fichier] = '\0';
 	sprintf(chaine , "%s/useful_function.c", getenv("PWD"));
 	CLEF_5 = ftok(chaine, 'E');
-	if (CLEF_1 == -1)
+	if (CLEF_5 == -1)
 		error("ftok CLEF_5");
 	free (chaine);
 
@@ -181,8 +184,19 @@ void			creation_sem_msg(void)	//creation ds differentes files de message et sema
 	chaine[len_PWD + len_fichier] = '\0';
 	sprintf(chaine , "%s/robot_out.c", getenv("PWD"));
 	CLEF_6 = ftok(chaine, 'F');
-	if (CLEF_1 == -1)
+	if (CLEF_6 == -1)
 		error("ftok CLEF_6");
+	free (chaine);
+
+	len_fichier = strlen("/main.c");
+	chaine = (char*)malloc(sizeof(char) * (len_PWD + len_fichier + 1));
+	if (!chaine)
+		error("malloc chaine 7 PWD");
+	chaine[len_PWD + len_fichier] = '\0';
+	sprintf(chaine , "%s/main.c", getenv("PWD"));
+	CLEF_7 = ftok(chaine, 'F');
+	if (CLEF_7 == -1)
+		error("ftok CLEF_7");
 	free (chaine);
 
 	msgid_in = msgget(CLEF_1, IPC_CREAT | IPC_EXCL | 0660);
@@ -199,6 +213,8 @@ void			creation_sem_msg(void)	//creation ds differentes files de message et sema
 		error("msgget msgid_fin_go");
 	if ((msgid_out = msgget(CLEF_6, IPC_CREAT | IPC_EXCL | 0660)) == -1)
 		error("msgget robot_out");
+	if ((msgid_out_fin = msgget(CLEF_7, IPC_CREAT | IPC_EXCL | 0660)) == -1)
+		error("msgget robot_out extinction");
 	sem_convoyeur = sem_open("/sem_convoyeur", O_RDWR);
 	if (sem_convoyeur == SEM_FAILED)
 	{

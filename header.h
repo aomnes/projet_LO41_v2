@@ -78,6 +78,12 @@ typedef struct	s_cmpt_rendu
 	s_info_trs 	info_precedentes;
 }				s_cmpt_rendu;
 
+typedef struct	s_extinction
+{
+	long		type;
+	bool		valeur;
+}				s_extinction;
+
 typedef struct	s_do_thr
 {
 	long		type;
@@ -91,6 +97,7 @@ int msgid_machine;
 int msgid_cmpt_rendu_mach;
 int msgid_fin_go;
 int msgid_out;
+int msgid_out_fin;
 
 void		error(char *msg);
 void		gestionnaire_sigalrm(int inutilise);
