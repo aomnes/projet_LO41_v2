@@ -25,7 +25,7 @@ void 				*superviseur(s_piece **piece)
 		error("malloc nb_piece_sup superviseur");
 	//remplissage nb_piece_sup
 	for (int count = 0; count < nb_machine; count++)
-			nb_piece_sup[count] = sizeof(piece[count])/sizeof(s_piece);
+			nb_piece_sup[count] = sizeof(piece[count])/sizeof(s_piece);	//
 	while (i < nb_machine)
 	{
 		if (nb_piece_sup[i] != 0)
@@ -55,7 +55,7 @@ void 				*superviseur(s_piece **piece)
 				printf("==== Systeme en état de défaillance du a la machine: %d! ====", compte_rendu.info_precedentes.num_machine);
 				puts("10s...");
 				sleep(10);
-				fonction_spr_sem_msg();
+				fonction_spr_sem_msg();	//
 				exit(EXIT_FAILURE);
 			}
 		}
