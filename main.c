@@ -106,12 +106,12 @@ int			main(void)
 	creation_robot_install_table();
 	creation_robot_in();
 	creation_robot_out();
-	superviseur(piece);		//lancement du superviseur
+	superviseur(piece);//lancement du superviseur
 
 	free(piece);
 	free(nb_piece_sup);
 	free(nb_piece);
-	fonction_spr_sem_msg();		//
+	fonction_spr_sem_msg();//suprimer le/les sem files de message
 
 	return (0);
 }

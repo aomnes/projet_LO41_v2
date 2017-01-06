@@ -21,7 +21,7 @@ s_piece		**creation_piece(int nb_machine, s_piece **piece)
 	nb_piece = (int*)malloc(sizeof(int) * nb_machine);
 	if (!nb_piece)
 		error("malloc nb_piece");
-	piece = (s_piece**)malloc(sizeof(piece) * nb_machine);		//ajouter le free(2) dans le signal
+	piece = (s_piece**)malloc(sizeof(piece) * nb_machine);
 	if (!piece)
 		error("malloc creation tableau piece");
     while (nb_type_piece)		//on cree un certain nombre de piece d'un certain type pour une machine
