@@ -49,12 +49,7 @@ void 				*superviseur(s_piece **piece)
 			if (nb_piece[compte_rendu.info_precedentes.num_machine] < compte_rendu.info_precedentes.num_piece)
 			{
 				printf("==== Systeme en état de défaillance du a la machine: %d! ====", compte_rendu.info_precedentes.num_machine);
-				somme++;
-				break;
-				//puts("10s...");
-				//sleep(10);
-				//fonction_spr_sem_msg();
-				//exit(EXIT_FAILURE);
+				return (NULL);
 			}
 		}
 		else

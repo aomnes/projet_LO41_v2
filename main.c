@@ -32,6 +32,14 @@ void 		fonction_sigkill(int signum)
 	raise(SIGKILL);
 }
 
+void 		fonction_sigill(int signum)
+{
+	(void)	signum;
+	signal(SIGILL, SIG_DFL);
+	fonction_spr_sem_msg();
+	raise(SIGILL);
+}
+
 int			main(void)
 {
 	s_piece **piece;
@@ -43,6 +51,7 @@ int			main(void)
 	signal(SIGINT, fonction_sigint);
 	signal(SIGBUS, fonction_sigbus);
 	signal(SIGKILL, fonction_sigkill);
+	signal(SIGILL, fonction_sigill);
 	creation_sem_msg();
 	puts("Combien voulez-vous de machines? (entrer autre chose que 0)");
 	nb_machine = lire_nombre_sp();
