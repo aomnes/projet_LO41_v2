@@ -29,15 +29,17 @@ void				*fonc_thread(void *k)		//fonction exécutée par chaque machine
 		{
 			/* premier passage, installation */
 			printf("Usinage en cours, machine[%d]\n", info_thread->num_thread);
-			alarm(10000 * RATIO_TEMPS);//peut etre probleme car fonctionne avec sec...
-			usleep((1000000 * 4000) * RATIO_TEMPS * ratio_defaut);
-			alarm(0);
+			//alarm(10000 * RATIO_TEMPS);//peut etre probleme car fonctionne avec sec...
+			//usleep((1000000 * 4000) * RATIO_TEMPS * ratio_defaut);
+			//alarm(0);
+			sleep(1);
 			rep_cmpt_rendu.status = OK;		//on defini les reponses a envoyer
 			rep_cmpt_rendu.info_precedentes = rep;
 			rep_cmpt_rendu.type = 3;
 			printf("Piece [%d][%d] a fini d usiner... envoi du rapport\n", rep.num_machine, rep.num_piece);
 			if (msgsnd(msgid_cmpt_rendu_mach, &rep_cmpt_rendu, sizeof(s_cmpt_rendu) - sizeof(long), 0) == -1)
 				error("msgsnd msgid_cmpt_rendu_mach creation_machine.c");
+			printf("message rendu  send\n");
 			if (msgrcv(msgid_fin_go, &rep, sizeof(s_info_trs) - sizeof(long), 4, 0) == -1)
 				error("msgrcv creation_machine rep msgid_fin_go");
 			printf("Piece [%d][%d] va direction depot, elle est sur le convoyeur", rep.num_machine, rep.num_piece);

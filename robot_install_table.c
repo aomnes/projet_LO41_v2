@@ -17,7 +17,7 @@ void				*fonc_thread_rbt_install(void *k)
 		//ssize_t msgrcv(int msqid, void *msgp, size_t msgsz, long msgtyp, int msgflg);
 		if (msgrcv(msgid_rbt_inst_table, &message, sizeof(s_info_trs) - sizeof(long), 1, 0) == -1)
 			error("msgrcv msgid_rbt_inst_table");
-		sem_post(sem_convoyeur);//++
+		//sem_post(sem_convoyeur);//++
 		if (message.piece.def_retire_conv)		//si la piece est defectueuse, les temps de manipulation seront multipliés par deux
 			ratio_defaut = 2;
 		else
